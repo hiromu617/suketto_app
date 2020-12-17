@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  protect_from_forgery
+  
   def index
     users = User.find_by(uid: params[:uid])
     render json: users
@@ -16,6 +18,9 @@ class Api::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :uid)
+    params.fetch(:user, {}).permit(
+      :name, :email, :uid
+    )
+    # params.require(:user).permit(:name, :email, :uid)
   end
 end

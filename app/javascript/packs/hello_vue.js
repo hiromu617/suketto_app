@@ -7,23 +7,28 @@
 
 import Vue from 'vue'
 import App from '../app.vue'
-import Router from '../router/router'
+import router from '../router/router'
+import store from '../store'
 import Vuetify from "vuetify"; // 追加
 import "vuetify/dist/vuetify.min.css"; // 追加
 
 Vue.use(Vuetify); // 追加
 const vuetify = new Vuetify(); // 追加
 
-document.addEventListener('DOMContentLoaded', () => {
-  const app = new Vue({
-    router: Router,
-    vuetify,
-    render: h => h(App)
-  }).$mount()
-  document.body.appendChild(app.$el)
+store.dispatch('autoLogin').then(
+  document.addEventListener('DOMContentLoaded', () => {
+    const app = new Vue({
+      router,
+      store,
+      vuetify,
+      render: h => h(App)
+    }).$mount()
+    document.body.appendChild(app.$el)
+    // console.log(app)
+  })
+);
 
-  console.log(app)
-})
+
 
 
 // The above code uses Vue without the compiler, which means you cannot

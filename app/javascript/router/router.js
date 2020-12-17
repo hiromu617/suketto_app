@@ -1,28 +1,38 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import SignUp from '../components/SignUp'
-// import SignIn from '../components/SignIn'
-// import User from '../components/users/User'
+import Vue from "vue";
+import Router from "vue-router";
+import store from "../store";
+import Login from "../views/Login";
+import Register from "../views/Register";
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/signup',
-      name: 'signup',
-      component: SignUp
+      path: '/'
     },
-    // {
-    //   path: '/signin',
-    //   name: 'signin',
-    //   component: SignIn
-    // },
-    // {
-    //   path: '/api/users',
-    //   name: 'User',
-    //   component: User
-    // },
+    {
+      path: '/login',
+      component: Login,
+      beforeEnter(to, from, next) {
+        if (store.getters.idToken) {
+          next('/');
+        } else{
+          next()
+        }
+      }
+    },
+    {
+      path: '/register',
+      component: Register,
+      beforeEnter(to, from, next) {
+        if (store.getters.idToken) {
+          next('/');
+        } else{
+          next()
+        }
+      }
+    },
   ]
-})
+});

@@ -1,6 +1,7 @@
 <template>
   <div class="signup">
     <h2>Sign up</h2>
+    <input type="text" placeholder="name" v-model="name">
     <input type="email" placeholder="Email" v-model="email">
     <input type="password" placeholder="Password" v-model="password">
     <button @click="signUp">Register</button>
@@ -12,10 +13,12 @@
 
 <script>
 import firebase from '../plugins/firebase'
+import axios from '../plugins/axios'
 export default {
   name: 'Signup',
   data() {
     return {
+      name: '',
       email: '',
       password: '',
       user: null,
@@ -25,6 +28,7 @@ export default {
     signUp: function() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then(user => {
+          axios.post("/api/users", { user:  {name: this.name, email: this.email, uid: user.user.uid}})
           alert("Create account!")
           let newUser = {
             uid: user.user.uid,
