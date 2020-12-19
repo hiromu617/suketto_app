@@ -38,26 +38,18 @@ export default {
   },
   methods: {
     register(){
+      this.$store.dispatch('register',{
+        email: this.email,
+        password: this.password
+      })
       axios.post("/api/users", { user:  {name: this.name, email: this.email}})
-      .then(
-        this.$store.dispatch('register',{
-          email: this.email,
-          password: this.password
-        })
-      ).catch( error =>{
-        alert(error.message);
-      })
-      alert("create acount!");
-
-      axios.get("/api/user/", {
-        params: {
-          email: this.email
-        }
-      })
       .then( res => {
         this.$store.state.currentUser = res.data;
       })
-      .catch( e => console.log(e) ) 
+      .catch( error =>{
+        alert(error.message);
+      })
+      alert("create acount!");
       
       this.name = "";
       this.email = "";

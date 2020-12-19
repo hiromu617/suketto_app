@@ -21,7 +21,9 @@ store.dispatch('autoLogin').then(
       router,
       store,
       vuetify,
-      render: h => h(App)
+      render: h => h(App),
+      created() {
+      }
     }).$mount()
     document.body.appendChild(app.$el)
     // console.log(app)

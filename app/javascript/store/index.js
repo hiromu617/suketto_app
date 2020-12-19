@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate'
 import router from '../router/router';
 import axios from '../plugins/axios-auth';
 import axiosRefresh from '../plugins/axios-refresh';
@@ -21,7 +22,7 @@ export default new Vuex.Store({
     },
     setCurrentUser(state, user){
       state.user = user;
-    }
+    },
   },
   actions: {
     async autoLogin({ commit }){
@@ -56,7 +57,8 @@ export default new Vuex.Store({
           idToken: response.data.idToken,
           expiresIn: response.data.expiresIn,
           refreshIdToken: response.data.refreshIdToken,
-        });
+        })
+        .catch (e => alert(e))
         router.push('/');
         // console.log(response);
       });
@@ -97,7 +99,8 @@ export default new Vuex.Store({
           idToken: response.data.idToken,
           expiresIn: response.data.expiresIn,
           refreshIdToken: response.data.refreshIdToken,
-        });
+        })
+        .catch(e => alert(e));
         router.push('/');
       });
     },
@@ -112,5 +115,8 @@ export default new Vuex.Store({
           dispatch('refreshIdToken', authData.refreshToken);
         }, authData.expiresIn * 1000);
     }
-  }
+  },
+  plugins: [createPersistedState(
+   
+  )]
 })
