@@ -17,7 +17,7 @@ export default new Vuex.Store({
     currentUser: state => state.currentUser,
   },
   mutations: {
-    updateIdToken(state, idToken){
+    updateIdToken(state, idToken) {
       state.idToken = idToken;
     },
     setCurrentUser(state, user){
@@ -25,52 +25,52 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async autoLogin({ commit }){
+    async autoLogin({ commit, dispatch }) {
       const idToken = localStorage.getItem('idToken');
-      if(!idToken) return;
+      if (!idToken) return;
       const now = new Date();
       const expiryTimeMs = localStorage.getItem('expiryTimeMs');
       const isExpired = now.getTime() >= expiryTimeMs;
       const refreshToken = localStorage.getItem('refreshToken');
       if (isExpired) {
         await dispatch('refreshIdToken', refreshToken);
-      } else{
+      } else {
         const expiresInMs = expiryTimeMs - now.getTime();
         setTimeout(() => {
           dispatch('refreshIdToken', refreshToken);
         }, expiresInMs);
         commit('updateIdToken', idToken);
       }
-      commit('updateIdToken', idToken);
     },
     login({ dispatch }, authData) {
-      axios.post(
-        '/accounts:signInWithPassword?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
-        {
-          email: authData.email,
-          password: authData.password,
-          returnSecureToken: true
-        }
-      ).then(response => {
-        console.log(response);
-        dispatch('setAuthData',{
-          idToken: response.data.idToken,
-          expiresIn: response.data.expiresIn,
-          refreshIdToken: response.data.refreshIdToken,
-        })
-        .catch (e => alert(e))
-        router.push('/');
+      axios
+        .post(
+          '/accounts:signInWithPassword?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
+          {
+            email: authData.email,
+            password: authData.password,
+            returnSecureToken: true
+          }
+        )
+        .then(response => {
+          dispatch('setAuthData', {
+            idToken: response.data.idToken,
+            expiresIn: response.data.expiresIn,
+            refreshIdToken: response.data.refreshIdToken,
+          })
+          .catch (e => alert(e))
+          router.push('/');
         // console.log(response);
-      });
+        });
     },
-    logout({ commit }){
+    logout({ commit }) {
       commit('updateIdToken', null);
       localStorage.removeItem('idToken');
       localStorage.removeItem('expiryTimeMs');
       localStorage.removeItem('refreshToken');
       router.replace('/login');
     },
-    async refreshIdToken({ dispatch}, refreshToken){
+    async refreshIdToken({ dispatch }, refreshToken){
       await axiosRefresh.post(
         '/token?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
         {
@@ -81,7 +81,7 @@ export default new Vuex.Store({
         dispatch('setAuthData',{
           idToken: response.data.id_token,
           expiresIn: response.data.expires_in,
-          refreshIdToken: response.data.refresh_id_token,
+          refreshToken: response.data.refresh_id_token,
         });
       });
     },
@@ -94,7 +94,7 @@ export default new Vuex.Store({
           returnSecureToken: true
         }
       ).then(response => {
-        console.log(response);
+        // console.log(response);
         dispatch('setAuthData',{
           idToken: response.data.idToken,
           expiresIn: response.data.expiresIn,

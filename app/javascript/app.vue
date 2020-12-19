@@ -2,6 +2,7 @@
   <div id="app">
     <v-app-bar>
       <v-toolbar-title>SUKETTO</v-toolbar-title>
+      <router-link to="/">HOME</router-link>
       <temprate v-if="!isAuthenticated">
         <router-link to="/login">ログイン</router-link>
         <router-link to="/register">登録</router-link>
