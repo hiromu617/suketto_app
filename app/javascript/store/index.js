@@ -8,14 +8,19 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    idToken: null
+    idToken: null,
+    currentUser: {},
   },
   getters: {
-    idToken: state => state.idToken
+    idToken: state => state.idToken,
+    currentUser: state => state.currentUser,
   },
   mutations: {
     updateIdToken(state, idToken){
       state.idToken = idToken;
+    },
+    setCurrentUser(state, user){
+      state.user = user;
     }
   },
   actions: {
@@ -33,7 +38,7 @@ export default new Vuex.Store({
         setTimeout(() => {
           dispatch('refreshIdToken', refreshToken);
         }, expiresInMs);
-        commit('udateIdToken', idToken);
+        commit('updateIdToken', idToken);
       }
       commit('updateIdToken', idToken);
     },
@@ -46,6 +51,7 @@ export default new Vuex.Store({
           returnSecureToken: true
         }
       ).then(response => {
+        console.log(response);
         dispatch('setAuthData',{
           idToken: response.data.idToken,
           expiresIn: response.data.expiresIn,
@@ -86,13 +92,13 @@ export default new Vuex.Store({
           returnSecureToken: true
         }
       ).then(response => {
+        console.log(response);
         dispatch('setAuthData',{
           idToken: response.data.idToken,
           expiresIn: response.data.expiresIn,
           refreshIdToken: response.data.refreshIdToken,
         });
         router.push('/');
-        // console.log(response);
       });
     },
     setAuthData({ commit, dispatch }, authData){

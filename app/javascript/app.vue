@@ -10,7 +10,7 @@
         <span @click="logout">ログアウト</span>
       </temprate>
     </v-app-bar>
-    <p>{{ message }}</p>
+    <p>{{ currentUser }}</p>
     <router-view>
     </router-view>
   </div>
@@ -24,6 +24,9 @@ export default {
     }
   },
   computed: {
+    currentUser() {
+      return this.$store.state.currentUser;
+    },
     idToken() {
       return this.$store.getters.idToken;
     },
@@ -33,6 +36,7 @@ export default {
   },
   methods: {
     logout() {
+      this.$store.state.currentUser = {};
       this.$store.dispatch('logout');
     }
   }
