@@ -3,12 +3,12 @@ class Api::QuestionsController < ApplicationController
 
   def index
     @questions = Question.order('created_at DESC')
-    render json: @questions
+    render json: @questions, include: 'user'
   end
 
   def show
     @question = Question.find_by(id: params[:id])
-    render json: @question
+    render json: @question, include: 'user'
   end
 
   def edit
@@ -19,7 +19,7 @@ class Api::QuestionsController < ApplicationController
     if @question.save
       render json: @question
     else
-      render json: @question.errors
+      render json: @question.errors, status: :unprocessable_entity
     end
   end
 

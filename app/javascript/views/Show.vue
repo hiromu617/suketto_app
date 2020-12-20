@@ -28,6 +28,7 @@
       <p>{{question.title}}</p>
       <p>{{question.body}}</p>
       <p>ユーザーid: {{question.user_id}}</p>
+      <p>投稿者: {{question.user.name}}</p>
       <p>作成日: {{question.created_at}}</p>
       <p>更新日: {{question.updated_at}}</p>
       <button v-if="questioner" @click="(editFlg = true)">編集</button>

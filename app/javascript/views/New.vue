@@ -53,6 +53,7 @@ export default {
         router.push({ name: 'show', params: {id: res.data.id } })
       })
       .catch( e => {
+        alert(e.message)
         console.log(e.message)
         console.log(this.$store.state.currentUser.id)
       })
