@@ -12,7 +12,7 @@
         <router-link :to="{ name: 'new' }">質問投稿</router-link>
       </temprate>
     </v-app-bar>
-    <p>{{ currentUser }}</p>
+    <p>{{ currentUser.name }}がログインしています</p>
     <router-view>
     </router-view>
   </div>
