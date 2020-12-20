@@ -1,4 +1,5 @@
 class Api::QuestionsController < ApplicationController
+  protect_from_forgery
 
   def index
     @questions = Question.order('created_at DESC')
@@ -15,7 +16,6 @@ class Api::QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-
     if @question.save
       render json: @question
     else
@@ -24,9 +24,9 @@ class Api::QuestionsController < ApplicationController
   end
 
   def update
-    @question = Question.find(params[:id])
-    if @question.update(question_params)
-      render :show
+    @question = Question.find_by(id: params[:id])
+    if @question.update(update_params)
+      render json: @question
     else
       render json: @question.errors
     end
@@ -42,6 +42,12 @@ class Api::QuestionsController < ApplicationController
   def question_params
     params.fetch(:question, {}).permit(
       :user_id,:title,:body
+    )
+  end
+
+  def update_params
+    params.fetch(:question, {}).permit(
+      :title,:body
     )
   end
 end

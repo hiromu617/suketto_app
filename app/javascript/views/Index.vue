@@ -8,7 +8,7 @@
         class="card"
         :to="{ name: 'show', params: {id: question.id } }"
       >
-        <v-card-title>タイトル: {{question.title}}</v-card-title>
+        <v-card-title>{{question.title}}</v-card-title>
         <p>作成日: {{question.created_at}}</p>
       </v-card>
     </ul>

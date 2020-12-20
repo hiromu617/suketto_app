@@ -5,6 +5,7 @@ import Login from "../views/Login";
 import Register from "../views/Register";
 import Index from "../views/Index";
 import Show from "../views/Show";
+import New from "../views/New";
 
 Vue.use(Router);
 
@@ -13,11 +14,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Index
+      component: Index,
+      name: 'index'
     },
     {
       path: '/login',
       component: Login,
+      name: 'login',
       beforeEnter(to, from, next) {
         if (store.getters.idToken) {
           next('/');
@@ -29,6 +32,7 @@ export default new Router({
     {
       path: '/register',
       component: Register,
+      name: 'register',
       beforeEnter(to, from, next) {
         if (store.getters.idToken) {
           next('/');
@@ -38,9 +42,14 @@ export default new Router({
       }
     },
     {
+      path: '/new',
+      component: New,
+      name: 'new'
+    },
+    {
       path: '/:id',
       component: Show,
       name: 'show'
-    }
+    },
   ]
 });

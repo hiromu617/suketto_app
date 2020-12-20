@@ -5,11 +5,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :users, only: [:index, :create]
-  end
-  
-  namespace :api do
     resources :questions
   end
+  
 
   get '*path', to: 'home#index'
 end
