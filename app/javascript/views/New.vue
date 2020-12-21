@@ -20,7 +20,7 @@
         ></textarea>
       </div>
       
-        <v-button type="submit" @click="create">送信</v-button>
+        <v-button type="submit" @click="createQuestion">送信</v-button>
     </div>
   </div>
   
@@ -38,12 +38,12 @@ export default {
     }
   },
   methods: {
-    create: function(){
+    createQuestion: function(){
       axios.post('/api/questions', { 
         question: {
            title: this.title, 
            body: this.body, 
-           user_id: 1
+           user_id: this.$store.state.currentUser.id
         }
       })
       .then( res => {

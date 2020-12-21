@@ -10,9 +10,9 @@
       <temprate v-if="isAuthenticated">
         <span @click="logout">ログアウト</span>
         <router-link :to="{ name: 'new' }">質問投稿</router-link>
+        <span>{{ currentUser.name }}がログインしています</span>
       </temprate>
     </v-app-bar>
-    <p>{{ currentUser.name }}がログインしています</p>
     <router-view>
     </router-view>
   </div>
