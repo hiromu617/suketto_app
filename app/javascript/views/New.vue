@@ -11,7 +11,7 @@
         <v-textarea
           label="質問内容"
           type="text" 
-          v-model="title"
+          v-model="body"
           counter
           auto-grow
           filled
