@@ -1,23 +1,28 @@
 <template>
-  <div>
-    <h2>ログイン</h2>
-    <label for="email">Email：</label>
-    <input 
-      id="email"
-      type="email"
-      v-model="email"
-    >
-    <br><br>
-    <label for="password">パスワード：</label>
-    <input 
-      id="password"
-      type="password"
-      v-model="password"
-    >
-    <br><br>
-    <button @click="login">送信</button>
-    <h2>{{ currentUser }}</h2>
-  </div>
+  <v-card width="600px" class="mx-auto mt-10 card">
+    <v-card-title>
+      <h2 class="display-1">ログイン</h2>
+    </v-card-title>
+    <v-card-text>
+      <v-form>
+        <v-text-field 
+          prepend-icon="mdi-email"
+          label="Email"
+          type="email"
+          v-model="email"
+        />     
+        <v-text-field 
+          prepend-icon="mdi-lock"
+          label="パスワード"
+          v-model="password"
+          v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          v-bind:type="showPassword ? 'text' : 'password'" 
+          @click:append="showPassword = !showPassword"
+         />
+          <v-btn color="indigo darken-4" large class="" dark @click="login">送信</v-btn>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 <script>
 import axios from '../plugins/axios';
@@ -26,7 +31,8 @@ export default {
   data() {
     return {
       email: '',
-      password:''
+      password:'',
+      showPassword: false
     };
   },
   computed: {
@@ -60,3 +66,5 @@ export default {
   }
 }
 </script>
+<style>
+</style>

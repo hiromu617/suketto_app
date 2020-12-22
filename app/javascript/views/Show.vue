@@ -1,68 +1,75 @@
 <template>
   <div>
-    <h2>Show</h2>
-    <h3>Question</h3>
-    <div v-if="editFlg">
-       <div>
-        <label for="title">タイトル</label>
-        <input 
-          type="text" 
-          id="title" 
-          v-model="question.title"
-        >
-      </div>
-      <div>
-        <label for="body">質問内容</label>
-        <textarea 
-          id="body" 
-          cols="30" 
-          rows="10" 
-          v-model="question.body"
-        ></textarea>
-      </div>
-      <button @click="(editFlg = false)">戻る</button>
-      <button @click="updateQuestion">更新</button>
-    </div>
+    <h2 class="text-h2">Question</h2>
+    <v-card v-if="editFlg">
+      <v-card-text>
+        <v-form>
+          <v-text-field
+            label="タイトル"
+            type="text" 
+            v-model="question.title"
+          />
+          <v-textarea
+            label="質問内容"
+            v-model="question.body"
+            counter
+            auto-grow
+          />
+        </v-form>
+        <v-btn  color="indigo lighten-4" class="mr-3" @click="(editFlg = false)">戻る</v-btn>
+        <v-btn  color="blue lighten-1" dark @click="updateQuestion">更新</v-btn>
+      </v-card-text>
+     
+    </v-card>
     <v-card v-else>
-      <p>{{this.$route.params.id}}</p>
       <v-card-title>{{question.title}}</v-card-title>
-      <v-card-text>{{question.body}}</v-card-text>
-      <p>ユーザーid: {{question.user_id}}</p>
-      <p>投稿者: {{question.user.name}}</p>
-      <p>作成日: {{question.created_at}}</p>
-      <p>更新日: {{question.updated_at}}</p>
-      <button v-if="questioner" @click="(editFlg = true)">編集</button>
+      <v-card-text>
+        <p class="body-1">{{question.body}}</p>
+        <p class="caption">
+          回答 {{question.answers.length}}件<br>
+          投稿者: {{question.user.name}}<br>
+          作成日: {{question.created_at}}<br>
+          更新日: {{question.updated_at}}<br>
+        </p>
+        <div v-if="questioner">
+          <v-btn  color="blue lighten-1" class="mr-3" dark @click="(editFlg = true)">編集</v-btn>
+          <v-btn  color="red lighten-1" dark @click="deleteQuestion">削除</v-btn>
+        </div>
+      </v-card-text>
     </v-card>
     
-    <p>{{questioner}}</p>
-    <div v-if="questioner">
-      <button @click="deleteQuestion">削除</button>
-    </div>
-
-    <h3>Answers</h3>
+    <h3 class="text-h4">{{answers.length}} answers</h3>
       <v-card 
         v-for="answer in answers" 
         v-bind:key="answer.id"
         class="card"
       >
-        <v-card-text>{{answer.id}}</v-card-text>
+        <v-card-text>
+          <p class="body-1">{{answer.body}}</p>
+          <p class="caption">
+            {{answer.user.name}}<br>
+            {{answer.created_at}}
+          </p>
         <div v-if="currentUserId === answer.user_id">
-          <button @click="deleteAnswer(answer.id)">削除</button>
+          <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
         </div>
-        <v-card-text>{{answer.body}}</v-card-text>
-        <v-card-text>{{answer.user.name}}</v-card-text>
-        <v-card-text>{{answer.created_at}}</v-card-text>
+        </v-card-text>
       </v-card>
-      <div v-if="!questioner ">
-        <label for="answerBody">あなたの回答</label>
-        <textarea 
-          id="answerBody" 
-          cols="30" 
-          rows="10"
-          v-model="answerBody"
-        ></textarea>
-        <button @click="createAnswer">回答する</button>
-      </div>
+      <v-card v-if="!questioner ">
+        <v-form>
+          <v-card-text>
+            <v-textarea
+              label="あなたの回答"
+              v-model="answerBody"
+              background-color="indigo lighten-5"
+              counter
+              auto-grow
+              filled
+            ></v-textarea>
+            <v-btn  color="indigo darken-4" large dark block @click="createAnswer">回答する</v-btn>
+          </v-card-text>
+        </v-form>
+      </v-card>
   </div>
   
 </template>
@@ -162,3 +169,9 @@ export default {
   }
 }
 </script>
+<style>
+.v-card{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+</style>

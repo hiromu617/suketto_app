@@ -3,7 +3,7 @@ class Api::QuestionsController < ApplicationController
 
   def index
     @questions = Question.order('created_at DESC')
-    render json: @questions, include: 'user'
+    render json: @questions, include: ['user','answers']
   end
 
   def show

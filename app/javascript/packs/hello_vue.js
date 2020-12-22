@@ -11,6 +11,7 @@ import router from '../router/router'
 import store from '../store'
 import Vuetify from "vuetify"; // 追加
 import "vuetify/dist/vuetify.min.css"; // 追加
+import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
 
 Vue.use(Vuetify); // 追加
 const vuetify = new Vuetify(); // 追加
@@ -21,6 +22,9 @@ store.dispatch('autoLogin').then(
       router,
       store,
       vuetify,
+      icons: {
+        iconfont: 'mdi', // default - only for display purposes
+      },
       render: h => h(App),
       created() {
       }
