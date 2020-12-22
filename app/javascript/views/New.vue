@@ -1,28 +1,25 @@
 <template>
-  <div>
-    <h2>New</h2>
-    <div>
-      <div>
-        <label for="title">タイトル</label>
-        <input 
-          type="text" 
-          id="title" 
+  <v-card>
+    <v-card-title class="text-h3">新規質問</v-card-title>
+    <v-card-text>
+      <v-form>
+        <v-text-field
+          label="タイトル"
           v-model="title"
-        >
-      </div>
-      <div>
-        <label for="body">質問内容</label>
-        <textarea 
-          id="body" 
-          cols="30" 
-          rows="10" 
-          v-model="body"
-        ></textarea>
-      </div>
-      
-        <v-button type="submit" @click="createQuestion">送信</v-button>
-    </div>
-  </div>
+          type="text"
+        />
+        <v-textarea
+          label="質問内容"
+          type="text" 
+          v-model="title"
+          counter
+          auto-grow
+          filled
+        ></v-textarea>
+        <v-btn  color="indigo darken-4" large block dark type="submit" @click="createQuestion">質問する</v-btn>
+      </v-form>
+    </v-card-text>
+  </v-card>
   
 </template>
 

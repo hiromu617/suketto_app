@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2 class="text-h2">Question</h2>
     <v-card v-if="editFlg">
       <v-card-text>
         <v-form>
@@ -22,7 +21,7 @@
      
     </v-card>
     <v-card v-else>
-      <v-card-title>{{question.title}}</v-card-title>
+      <v-card-title class="text-h3">{{question.title}}</v-card-title>
       <v-card-text>
         <p class="body-1">{{question.body}}</p>
         <p class="caption">
