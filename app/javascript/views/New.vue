@@ -47,7 +47,7 @@ export default {
         alert('Question posted!')
         this.title = ''
         this.body = ''
-        router.push({ name: 'show', params: {id: res.data.id } })
+        router.replace({ name: 'show', params: {id: res.data.id } })
       })
       .catch( e => {
         alert(e.message)

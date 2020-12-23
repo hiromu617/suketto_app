@@ -45,7 +45,7 @@ class Api::QuestionsController < ApplicationController
 
   def update_params
     params.fetch(:question, {}).permit(
-      :title,:body
+      :title,:body,:best_answer_id
     )
   end
 end

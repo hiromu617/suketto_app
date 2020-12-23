@@ -9,6 +9,8 @@
       >
         <v-card-title>{{question.title}}</v-card-title>
         <v-card-text>
+          <div v-if="question.best_answer_id">解決済み</div>
+          <div v-else>未解決</div>
         回答数: {{question.answers.length}}<br>
         投稿者: {{question.user.name}}<br>
         作成日: {{question.created_at}}

@@ -23,6 +23,8 @@
     <v-card v-else>
       <v-card-title class="text-h3">{{question.title}}</v-card-title>
       <v-card-text>
+        <div v-if="question.best_answer_id">解決済み</div>
+        <p>{{answers.length}}件の回答</p>
         <p class="body-1">{{question.body}}</p>
         <p class="caption">
           回答 {{question.answers.length}}件<br>
@@ -36,25 +38,57 @@
         </div>
       </v-card-text>
     </v-card>
-    
-    <h3 class="text-h4">{{answers.length}} answers</h3>
-      <v-card 
-        v-for="answer in answers" 
-        v-bind:key="answer.id"
+    <div
+      v-for="answer in answers" 
+      v-bind:key="answer.id"
+    >
+      <div v-if="question.best_answer_id === answer.id">
+        <h3>BEST ANSWER</h3>
+        <v-card 
         class="card"
-      >
+        >
         <v-card-text>
           <p class="body-1">{{answer.body}}</p>
           <p class="caption">
             {{answer.user.name}}<br>
             {{answer.created_at}}
           </p>
+        <div v-if="questioner && !question.best_answer_id">
+          <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
+        </div>
         <div v-if="currentUserId === answer.user_id">
           <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
         </div>
         </v-card-text>
       </v-card>
-      <v-card v-if="!questioner ">
+      </div>
+      <div v-else>
+        <div v-if="question.best_answer_id">
+          <h3>その他の回答</h3>
+        </div>
+        <v-card 
+          class="card"
+        >
+          <v-card-text>
+            
+            <p class="body-1">{{answer.body}}</p>
+            <p class="caption">
+              {{answer.user.name}}<br>
+              {{answer.created_at}}
+            </p>
+          <div v-if="questioner && !question.best_answer_id">
+            <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
+          </div>
+          <div v-if="currentUserId === answer.user_id">
+            <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
+          </div>
+          </v-card-text>
+        </v-card>
+      </div>
+      
+    </div>
+      
+      <v-card v-if="!questioner && !question.best_answer_id">
         <v-form>
           <v-card-text>
             <v-textarea
@@ -164,6 +198,17 @@ export default {
         console.log(this.answers)
       })
       .catch(e => console.log(e.message))
+    },
+    createBA: function(answer_id){
+      axios.put('/api/questions/' + this.$route.params.id,{
+        question: {
+          best_answer_id: this.$route.params.id
+        }
+      })
+      .then( res => {
+        alert('ベストアンサーを決定しました')
+      })
+      .catch( e => console.log(e.message))
     }
   }
 }
@@ -173,4 +218,5 @@ export default {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 </style>

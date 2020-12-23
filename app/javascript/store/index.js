@@ -59,7 +59,7 @@ export default new Vuex.Store({
             refreshIdToken: response.data.refreshIdToken,
           })
           .catch (e => alert(e))
-          router.push('/');
+          router.go(-1);
         // console.log(response);
         });
     },
@@ -68,7 +68,7 @@ export default new Vuex.Store({
       localStorage.removeItem('idToken');
       localStorage.removeItem('expiryTimeMs');
       localStorage.removeItem('refreshToken');
-      router.replace('/login');
+      router.replace('/');
     },
     async refreshIdToken({ dispatch }, refreshToken){
       await axiosRefresh.post(
