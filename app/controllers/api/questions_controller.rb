@@ -3,18 +3,20 @@ class Api::QuestionsController < ApplicationController
 
   def index
     @questions = Question.order('created_at DESC')
-    render json: @questions, include: ['user','answers']
+    render json: @questions, include: ['user','answers', 'tags']
   end
 
   def show
     @question = Question.find_by(id: params[:id])
-    render json: @question, include: ['user','answers', 'answers.user']
+    render json: @question, include: ['user','answers', 'answers.user', 'tags']
   end
 
 
   def create
     @question = Question.new(question_params)
+    tag_list = params[:question][:tag_list]
     if @question.save
+      @question.save_tags(tag_list)
       render json: @question
     else
       render json: @question.errors, status: :unprocessable_entity
@@ -23,7 +25,9 @@ class Api::QuestionsController < ApplicationController
 
   def update
     @question = Question.find_by(id: params[:id])
+    tag_list = params[:question][:tag_list]
     if @question.update(update_params)
+      @question.save_tags(tag_list)
       render json: @question
     else
       render json: @question.errors
@@ -39,7 +43,7 @@ class Api::QuestionsController < ApplicationController
 
   def question_params
     params.fetch(:question, {}).permit(
-      :user_id,:title,:body
+      :user_id,:title,:body, :tag_list
     )
   end
 

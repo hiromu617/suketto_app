@@ -40,7 +40,8 @@ export default {
         question: {
            title: this.title, 
            body: this.body, 
-           user_id: this.$store.state.currentUser.id
+           user_id: this.$store.state.currentUser.id,
+           tag_list: ["tag1", "tag2"]
         }
       })
       .then( res => {

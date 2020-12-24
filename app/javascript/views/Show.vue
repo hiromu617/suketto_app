@@ -25,9 +25,9 @@
       <v-card-text>
         <div v-if="question.best_answer_id">解決済み</div>
         <p>{{answers.length}}件の回答</p>
+        <span v-for="tag in question.tags" :key="tag.id">{{tag.name}}</span>
         <p class="body-1">{{question.body}}</p>
         <p class="caption">
-          回答 {{question.answers.length}}件<br>
           投稿者: {{question.user.name}}<br>
           作成日: {{question.created_at}}<br>
           更新日: {{question.updated_at}}<br>
@@ -134,6 +134,7 @@ export default {
       axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
+        console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
         }
@@ -202,7 +203,7 @@ export default {
     createBA: function(answer_id){
       axios.put('/api/questions/' + this.$route.params.id,{
         question: {
-          best_answer_id: this.$route.params.id
+          best_answer_id: answer_id
         }
       })
       .then( res => {

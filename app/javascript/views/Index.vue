@@ -9,6 +9,7 @@
       >
         <v-card-title>{{question.title}}</v-card-title>
         <v-card-text>
+          <span v-for="tag in question.tags" :key="tag.id">{{tag.name}}</span>
           <div v-if="question.best_answer_id">解決済み</div>
           <div v-else>未解決</div>
         回答数: {{question.answers.length}}<br>
