@@ -50,9 +50,10 @@
       v-bind:key="answer.id"
     >
       <div v-if="question.best_answer_id === answer.id">
-        <h3>BEST ANSWER</h3>
+        <h3 class="text-h4">✨👑BEST ANSWER👑✨</h3>
         <v-card 
         class="card"
+        color="yellow lighten-5"
         >
         <v-card-text>
           <p class="body-1">{{answer.body}}</p>
@@ -120,6 +121,13 @@ import router from '../router/router';
 import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
+  // directives: {
+  //   twemoji: {
+  //     inserted(el) {
+  //       el.innerHTML = twemoji.parse(el.innerHTML)
+  //     }
+  //   }
+  // },
   components: {
     VueTagsInput,
   },
@@ -188,6 +196,7 @@ export default {
       })
       .catch( e => console.log(e.message))
       this.question = {}
+      this.answers=[]
       this.getData()
     },
     createAnswer: function(){
@@ -218,6 +227,7 @@ export default {
       })
       .catch(e => console.log(e.message))
       this.answers=[]
+      this.question = {}
       this.getData()
     },
     createBA: function(answer_id){

@@ -33,7 +33,7 @@ export default {
       questions: [],
     }
   },
-  mounted: function () {
+  created: function () {
     this.fetchQuestions();
   },
   methods: {

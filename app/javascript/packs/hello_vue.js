@@ -9,12 +9,25 @@ import Vue from 'vue'
 import App from '../app.vue'
 import router from '../router/router'
 import store from '../store'
-import Vuetify from "vuetify"; // 追加
-import "vuetify/dist/vuetify.min.css"; // 追加
-import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
+import Vuetify from "vuetify"; 
+import "vuetify/dist/vuetify.min.css"; 
+import '@mdi/font/css/materialdesignicons.css'
+// import twemoji from 'twemoji'
 
-Vue.use(Vuetify); // 追加
-const vuetify = new Vuetify(); // 追加
+Vue.use(Vuetify); 
+const vuetify = new Vuetify(); 
+
+// Vue.directive('twemoji', {
+//   inserted(el) {
+//     el.innerHTML = twemoji.parse(el.innerHTML)
+//   }
+// })
+
+Vue.directive('emoji', {
+  inserted (el) {
+    el.innerHTML = twemoji.parse(el.innerHTML)
+  }
+})
 
 store.dispatch('autoLogin').then(
   document.addEventListener('DOMContentLoaded', () => {

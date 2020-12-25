@@ -6,7 +6,7 @@
         dark
       >
         <v-toolbar-title>
-          <router-link to="/" class="logo">SUKETTO</router-link>
+          <router-link to="/" class="logo">SUKETTO🛹</router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <temprate v-if="!isAuthenticated">

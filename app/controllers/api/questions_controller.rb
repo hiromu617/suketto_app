@@ -31,13 +31,22 @@ class Api::QuestionsController < ApplicationController
 
   def update
     @question = Question.find_by(id: params[:id])
-    tag_list = params[:question][:tag_list].map { |i| i[:text]}
-    if @question.update(update_params)
-      @question.save_tags(tag_list)
-      render json: @question
+    if params[:question][:tag_list]
+      tag_list = params[:question][:tag_list].map { |i| i[:text]}
+      if @question.update(update_params)
+        @question.save_tags(tag_list)
+        render json: @question
+      else
+        render json: @question.errors
+      end
     else
-      render json: @question.errors
+      if @question.update(update_params)
+        render json: @question
+      else
+        render json: @question.errors
+      end
     end
+    
   end
 
   def destroy
