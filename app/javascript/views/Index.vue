@@ -19,7 +19,11 @@
         作成日: {{question.created_at}}
         </v-card-text>
       </v-card>
-  
+      <v-pagination
+        v-model="page.currentPage"
+        :length="page.totalPages"
+        @input="changePage"
+      ></v-pagination>
   </div>
   
 </template>
@@ -31,19 +35,35 @@ export default {
   data: function() {
     return {
       questions: [],
+      page: {
+        currentPage: 1,
+        totalPages: 5,
+      }
     }
   },
   created: function () {
     this.fetchQuestions();
   },
   methods: {
+    changePage(val){
+      axios.get(`/api/questions?page=${val}`)
+      .then( res => {
+        // for(let i = 0; i < res.data.length; i++){
+        //   this.questions.push(res.data[i]);
+        // }
+        this.questions = []
+        this.questions = res.data
+      })
+    },
     fetchQuestions: function(){
       axios.get('/api/questions')
       .then( res => {
         console.log(res.data)
-        for(let i = 0; i < res.data.length; i++){
-          this.questions.push(res.data[i]);
-        }
+        this.page.totalPages = Number(res.headers["total-pages"])
+        this.questions = res.data
+        // for(let i = 0; i < res.data.length; i++){
+        //   this.questions.push(res.data[i]);
+        // }
         // console.log(this.questions)
       })
       .catch(e => console.log(e));

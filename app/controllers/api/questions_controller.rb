@@ -1,13 +1,20 @@
 class Api::QuestionsController < ApplicationController
   protect_from_forgery
+  require 'pagy'
+  include Pagy::Backend
+  require 'pagy/extras/headers'
 
   def index
     if params[:tag_id]
       @selected_tag = Tag.find(params[:tag_id])
-      @questions = Question.from_tag(params[:tag_id])
+      # @questions = Question.from_tag(params[:tag_id])
+      pagy, @questions = pagy(Question.from_tag(params[:tag_id]))
+      pagy_headers_merge(pagy)
       render json: @questions, include: ['user','answers', 'tags']
     else
-      @questions = Question.order('created_at DESC')
+      # @questions = Question.order('created_at DESC')
+      pagy, @questions = pagy(Question.order('created_at DESC'))
+      pagy_headers_merge(pagy)
       render json: @questions, include: ['user','answers', 'tags']
     end
   end
