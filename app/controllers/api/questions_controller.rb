@@ -14,7 +14,7 @@ class Api::QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    tag_list = params[:question][:tag_list]
+    tag_list = params[:question][:tag_list].map { |i| i[:text]}
     if @question.save
       @question.save_tags(tag_list)
       render json: @question
@@ -25,7 +25,7 @@ class Api::QuestionsController < ApplicationController
 
   def update
     @question = Question.find_by(id: params[:id])
-    tag_list = params[:question][:tag_list]
+    tag_list = params[:question][:tag_list].map { |i| i[:text]}
     if @question.update(update_params)
       @question.save_tags(tag_list)
       render json: @question

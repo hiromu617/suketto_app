@@ -16,6 +16,12 @@
           auto-grow
           filled
         ></v-textarea>
+        <vue-tags-input
+          v-model="tag"
+          :tags="tags"
+          @tags-changed="newTags => tags = newTags"
+        />
+        <p>{{this.tags}}</p>
         <v-btn  color="indigo darken-4" large block dark type="submit" @click="createQuestion">質問する</v-btn>
       </v-form>
     </v-card-text>
@@ -26,28 +32,37 @@
 <script>
 import axios from '../plugins/axios';
 import router from '../router/router';
+import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
+  components: {
+    VueTagsInput,
+  },
   data: function() {
     return {
       title: '',
-      body: ''
+      body: '',
+      tag: '',
+      tags: []
     }
   },
   methods: {
     createQuestion: function(){
+      console.log(this.tag)
+      console.log(this.tags)
       axios.post('/api/questions', { 
         question: {
            title: this.title, 
            body: this.body, 
            user_id: this.$store.state.currentUser.id,
-           tag_list: ["tag1", "tag2"]
+           tag_list: this.tags
         }
       })
       .then( res => {
         alert('Question posted!')
         this.title = ''
         this.body = ''
+        this.tags = []
         router.replace({ name: 'show', params: {id: res.data.id } })
       })
       .catch( e => {
