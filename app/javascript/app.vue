@@ -52,7 +52,7 @@ export default {
     logout() {
       this.$store.state.currentUser = {};
       this.$store.dispatch('logout');
-    }
+    },
   }
 }
 </script>

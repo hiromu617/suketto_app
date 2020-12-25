@@ -21,7 +21,6 @@
           :tags="tags"
           @tags-changed="newTags => tags = newTags"
         />
-        <p>{{this.tags}}</p>
         <v-btn  color="indigo darken-4" large block dark type="submit" @click="createQuestion">質問する</v-btn>
       </v-form>
     </v-card-text>

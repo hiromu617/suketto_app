@@ -14,6 +14,11 @@
             counter
             auto-grow
           />
+          <vue-tags-input
+            v-model="tag"
+            :tags="tags"
+            @tags-changed="newTags => tags = newTags"
+          />
         </v-form>
         <v-btn  color="indigo lighten-4" class="mr-3" @click="(editFlg = false)">戻る</v-btn>
         <v-btn  color="blue lighten-1" dark @click="updateQuestion">更新</v-btn>
@@ -25,7 +30,9 @@
       <v-card-text>
         <div v-if="question.best_answer_id">解決済み</div>
         <p>{{answers.length}}件の回答</p>
-        <span v-for="tag in question.tags" :key="tag.id">{{tag.name}}</span>
+        <div v-for="tag in question.tags" :key="tag.id">
+            <router-link :to="{ name: 'tag',params: {id: tag.id} }">{{tag.name}}</router-link>
+        </div>
         <p class="body-1">{{question.body}}</p>
         <p class="caption">
           投稿者: {{question.user.name}}<br>
@@ -110,20 +117,29 @@
 <script>
 import axios from '../plugins/axios';
 import router from '../router/router';
+import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
+  components: {
+    VueTagsInput,
+  },
   data: function() {
     return {
       question: {},
       answers: [],
+      tag: '',
+      tags: [],
       questioner: false,
       editFlg: false,
       answerBody: ''
     }
   },
-  mounted: function () {
+  created: function () {
     this.getData();
   },
+  // beforeUpdate: function(){
+  //   this.getData();
+  // },
   computed: {
     currentUserId(){
       return this.$store.state.currentUser.id
@@ -134,7 +150,7 @@ export default {
       axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
-        console.log(res.data)
+        // console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
         }
@@ -163,6 +179,7 @@ export default {
         question: {
           title: this.question.title,
           body: this.question.body,
+          tag_list: this.tags
         }
       })
       .then( res => {
@@ -170,6 +187,8 @@ export default {
         alert('質問を更新しました')
       })
       .catch( e => console.log(e.message))
+      this.question = {}
+      this.getData()
     },
     createAnswer: function(){
       if(!this.currentUserId){
@@ -196,9 +215,10 @@ export default {
       axios.delete('/api/answers/' + answer_id)
       .then(res => {
         alert('投稿を削除しました')
-        console.log(this.answers)
       })
       .catch(e => console.log(e.message))
+      this.answers=[]
+      this.getData()
     },
     createBA: function(answer_id){
       axios.put('/api/questions/' + this.$route.params.id,{

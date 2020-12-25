@@ -1,6 +1,6 @@
 <template>
   <div>
-  
+    <h3>#{{tag.name}}のついた質問</h3>
       <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
@@ -31,20 +31,29 @@ export default {
   data: function() {
     return {
       questions: [],
+      tag: {}
     }
   },
   mounted: function () {
-    this.fetchQuestions();
+    this.fetchTagQuestions();
   },
   methods: {
-    fetchQuestions: function(){
-      axios.get('/api/questions')
+    fetchTagQuestions: function(){
+      axios.get('/api/tags/' + this.$route.params.id)
+      .then( res => {
+        console.log(res)
+        this.tag = res.data
+      })
+      axios.get('/api/questions',{
+        params: {
+          tag_id: this.$route.params.id
+        }
+      })
       .then( res => {
         console.log(res.data)
         for(let i = 0; i < res.data.length; i++){
           this.questions.push(res.data[i]);
         }
-        // console.log(this.questions)
       })
       .catch(e => console.log(e));
     }

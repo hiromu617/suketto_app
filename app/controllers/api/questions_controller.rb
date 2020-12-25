@@ -2,8 +2,14 @@ class Api::QuestionsController < ApplicationController
   protect_from_forgery
 
   def index
-    @questions = Question.order('created_at DESC')
-    render json: @questions, include: ['user','answers', 'tags']
+    if params[:tag_id]
+      @selected_tag = Tag.find(params[:tag_id])
+      @questions = Question.from_tag(params[:tag_id])
+      render json: @questions, include: ['user','answers', 'tags']
+    else
+      @questions = Question.order('created_at DESC')
+      render json: @questions, include: ['user','answers', 'tags']
+    end
   end
 
   def show
@@ -49,7 +55,7 @@ class Api::QuestionsController < ApplicationController
 
   def update_params
     params.fetch(:question, {}).permit(
-      :title,:body,:best_answer_id
+      :title,:body,:best_answer_id, :tag_list
     )
   end
 end
