@@ -1,8 +1,7 @@
 class Api::QuestionsController < ApplicationController
   protect_from_forgery
-  require 'pagy'
-  include Pagy::Backend
   require 'pagy/extras/headers'
+  include Pagy::Backend
 
   def index
     if params[:tag_id]
