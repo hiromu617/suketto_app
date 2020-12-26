@@ -5,17 +5,19 @@ class Api::QuestionsController < ApplicationController
 
   def index
     if params[:tag_id]
-      @selected_tag = Tag.find(params[:tag_id])
-      # @questions = Question.from_tag(params[:tag_id])
-      pagy, @questions = pagy(Question.from_tag(params[:tag_id]))
-      pagy_headers_merge(pagy)
-      render json: @questions, include: ['user','answers', 'tags']
+      @questions = Question.from_tag(params[:tag_id])
+    elsif params[:sort] == 'unsolved'
+      @questions = Question.where(best_answer_id: nil).order('created_at DESC')
+    elsif params[:sort] == 'solved'
+      @questions = Question.where.not(best_answer_id: nil).order('created_at DESC')
+    # elsif params[:sort] == 'unanswered'
+    #   @questions = Question.where.not(best_answer_id: nil).order('created_at DESC')
     else
-      # @questions = Question.order('created_at DESC')
-      pagy, @questions = pagy(Question.order('created_at DESC'))
-      pagy_headers_merge(pagy)
-      render json: @questions, include: ['user','answers', 'tags']
+      @questions = Question.order('created_at DESC')
     end
+    pagy, @questions = pagy(@questions)
+    pagy_headers_merge(pagy)
+    render json: @questions, include: ['user','answers', 'tags']
   end
 
   def show

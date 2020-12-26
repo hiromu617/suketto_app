@@ -1,6 +1,11 @@
 <template>
   <div>
-  
+      <v-tabs>
+        <v-tab @click="sortQuestions('new')">新着順</v-tab>
+        <v-tab @click="sortQuestions('unsolved')">未解決</v-tab>
+        <v-tab @click="sortQuestions('solved')">解決済み</v-tab>
+        <!-- <v-tab @click="sortQuestions('unanswered')">未回答</v-tab> -->
+      </v-tabs>
       <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
@@ -35,6 +40,7 @@ export default {
   data: function() {
     return {
       questions: [],
+      sort: 'new',
       page: {
         currentPage: 1,
         totalPages: 5,
@@ -46,27 +52,34 @@ export default {
   },
   methods: {
     changePage(val){
-      axios.get(`/api/questions?page=${val}`)
+      this.questions = []
+      axios.get(`/api/questions?page=${val}`, {
+        params: {
+          sort: this.sort
+        }
+      })            
       .then( res => {
-        // for(let i = 0; i < res.data.length; i++){
-        //   this.questions.push(res.data[i]);
-        // }
-        this.questions = []
         this.questions = res.data
       })
     },
-    fetchQuestions: function(){
-      axios.get('/api/questions')
+    fetchQuestions: function(sortName){
+      this.questions = []
+      axios.get('/api/questions', {
+        params: {
+          sort: sortName
+        }
+      })
       .then( res => {
         console.log(res.data)
         this.page.totalPages = Number(res.headers["total-pages"])
+        this.page.currentPage = 1
         this.questions = res.data
-        // for(let i = 0; i < res.data.length; i++){
-        //   this.questions.push(res.data[i]);
-        // }
-        // console.log(this.questions)
       })
       .catch(e => console.log(e));
+    },
+    sortQuestions: function(sortName){
+      this.sort = sortName
+      this.fetchQuestions(sortName)
     }
   }
 }
