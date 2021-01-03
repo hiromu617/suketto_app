@@ -2,19 +2,26 @@
   <v-card>
     <v-card-title class="text-h3">新規質問</v-card-title>
     <v-card-text>
-      <v-form>
+      <v-form
+        v-model="valid"
+      >
         <v-text-field
           label="タイトル"
           v-model="title"
           type="text"
+          :rules="titleRules"
+          :counter="20"
+          required
         />
         <v-textarea
           label="質問内容"
           type="text" 
           v-model="body"
-          counter
           auto-grow
           filled
+          :rules="bodyRules"
+          :counter="50"
+          required
         ></v-textarea>
         <vue-tags-input
           v-model="tag"
@@ -39,8 +46,17 @@ export default {
   },
   data: function() {
     return {
+      valid: true,
       title: '',
+      titleRules: [
+        v => !!v || 'この項目は必須です',
+        v => v.length <= 20 || '20文字以内で入力してください',
+      ],
       body: '',
+      bodyRules: [
+        v => !!v || 'この項目は必須です',
+        v => v.length <= 50 || '50文字以内で入力してください',
+      ],
       tag: '',
       tags: []
     }
@@ -49,6 +65,9 @@ export default {
     createQuestion: function(){
       console.log(this.tag)
       console.log(this.tags)
+      if (this.$refs.form.validate() === false){
+        return
+      }
       axios.post('/api/questions', { 
         question: {
            title: this.title, 
