@@ -21,6 +21,27 @@
       </v-app-bar>
       <v-main>
         <v-container>
+          {{mode}}
+            <v-alert 
+              type="success"
+              color="blue"
+              text
+              dense
+              v-if="text"
+              transition="fade-transition"
+            >
+              {{ $store.state.text }}
+            </v-alert>
+            <v-alert 
+              type="error"
+              color="red"
+              text
+              dense
+              v-if="alertMessage"
+              transition="fade-transition"
+            >
+              {{ alertMessage }}
+            </v-alert>
           <router-view>
           </router-view>
         </v-container>
@@ -34,7 +55,6 @@
 export default {
   data: function () {
     return {
-      message: "Hello!"
     }
   },
   computed: {
@@ -46,7 +66,10 @@ export default {
     },
     isAuthenticated(){
       return this.$store.getters.idToken !== null;
-    }
+    },
+    text() {
+      return this.$store.state.text;
+    },
   },
   methods: {
     logout() {

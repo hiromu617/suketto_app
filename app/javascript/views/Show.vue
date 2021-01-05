@@ -174,7 +174,7 @@ export default {
       }
       axios.delete('/api/questions/' + this.$route.params.id)
       .then( res => {
-        alert('質問を削除しました')
+        this.$store.dispatch('showFlashMessage', {text: '質問を削除しました'});
         router.push('/')
       })
       .catch(e => console.log(e))
@@ -192,7 +192,8 @@ export default {
       })
       .then( res => {
         this.editFlg = false
-        alert('質問を更新しました')
+        this.$store.dispatch('showFlashMessage', {text: '質問を更新しました'});
+
       })
       .catch( e => console.log(e.message))
       this.question = {}
@@ -201,7 +202,7 @@ export default {
     },
     createAnswer: function(){
       if(!this.currentUserId){
-        alert('ログインして下さい！')
+        this.$store.dispatch('showFlashMessage', {text: 'ログインしてください'});
       }
       console.log(this.currentUserId)
       axios.post('/api/answers/',{
@@ -214,7 +215,7 @@ export default {
       .then( res => {
         this.answers.push(res.data);
         console.log(res)
-        alert('回答しました')
+        this.$store.dispatch('showFlashMessage', {text: '質問に回答しました'});
       })
       .catch(e => alert(e))
 
@@ -223,7 +224,7 @@ export default {
     deleteAnswer: function(answer_id) {
       axios.delete('/api/answers/' + answer_id)
       .then(res => {
-        alert('投稿を削除しました')
+        this.$store.dispatch('showFlashMessage', {text: '回答を削除しました'});
       })
       .catch(e => console.log(e.message))
       this.answers=[]
@@ -237,7 +238,7 @@ export default {
         }
       })
       .then( res => {
-        alert('ベストアンサーを決定しました')
+        this.$store.dispatch('showFlashMessage', {text: 'ベストアンサーを決定しました'});
       })
       .catch( e => console.log(e.message))
     }

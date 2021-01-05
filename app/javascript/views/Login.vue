@@ -4,12 +4,18 @@
       <h2 class="display-1">ログイン</h2>
     </v-card-title>
     <v-card-text>
-      <v-form>
+      <v-form
+        v-model="valid"
+        ref="form"
+        lazy-validation
+      >
         <v-text-field 
           prepend-icon="mdi-email"
           label="Email"
           type="email"
           v-model="email"
+          :rules="emailRules"
+          required
         />     
         <v-text-field 
           prepend-icon="mdi-lock"
@@ -18,6 +24,8 @@
           v-bind:append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
           v-bind:type="showPassword ? 'text' : 'password'" 
           @click:append="showPassword = !showPassword"
+          :rules="passwordRules"
+          required
          />
           <v-btn color="indigo darken-4" large class="" dark @click="login">送信</v-btn>
       </v-form>
@@ -30,8 +38,16 @@ import axios from '../plugins/axios';
 export default {
   data() {
     return {
+      valid: true,
       email: '',
+      emailRules: [
+        v => !!v || 'この項目を入力してください',
+        v => /.+@.+/.test(v) || 'フォーマットが正しくありません',
+      ],
       password:'',
+      passwordRules: [
+        v => !!v || 'この項目を入力してください',
+      ],
       showPassword: false
     };
   },
@@ -41,10 +57,18 @@ export default {
     },
   },
   methods: {
-    // change() {
-    //   this.$store.state.currentUser = "changed";
-    // },
     login(){
+      if (this.$refs.form.validate() === false){
+        this.$store.dispatch('showFlashMessage', {text: '正しく入力してください', mode: "error"});
+        return
+      }
+
+      this.$store.dispatch('login',{
+        email: this.email,
+        password: this.password
+      })  
+      
+      
       axios.get("/api/user/", {
         params: {
           email: this.email
@@ -53,13 +77,13 @@ export default {
       .then( res => {
         console.log(res.data)
         this.$store.state.currentUser = res.data;
+        this.$refs.form.reset()
       })
-      .catch( e => console.log(e) ) 
+      .catch( e => {
+        console.log(e.message)
+        return e.message;
+      }) 
 
-      this.$store.dispatch('login',{
-        email: this.email,
-        password: this.password
-      })
       this.email = "";
       this.password = "";
     }

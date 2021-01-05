@@ -63,9 +63,10 @@ export default {
   },
   methods: {
     createQuestion: function(){
-      console.log(this.tag)
-      console.log(this.tags)
+      // console.log(this.tag)
+      // console.log(this.tags)
       if (this.$refs.form.validate() === false){
+        this.$store.dispatch('showFlashMessage', {text: '失敗'});
         return
       }
       axios.post('/api/questions', { 
@@ -77,16 +78,17 @@ export default {
         }
       })
       .then( res => {
-        alert('Question posted!')
+        // alert("question posted")
         this.title = ''
         this.body = ''
         this.tags = []
-        router.replace({ name: 'show', params: {id: res.data.id } })
+        router.go({name: 'index'})
+        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'});
+        this.$store.dispatch('showFlashMessage', {text: ''});
       })
       .catch( e => {
-        alert(e.message)
-        console.log(e.message)
-        console.log(this.$store.state.currentUser.id)
+        // alert(e.message)
+        this.$store.dispatch('showFlashMessage', {text: '失敗'});
       })
     }
   }

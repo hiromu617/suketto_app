@@ -75,6 +75,7 @@ export default {
   methods: {
     register(){
       if (this.$refs.form.validate() === false){
+        this.$store.dispatch('showFlashMessage', {text: '正しく入力してください'});
         return
       }
       this.$store.dispatch('register',{
@@ -82,19 +83,21 @@ export default {
         password: this.password
       })
       .catch(e=>{
-        alert(e)
+        console.log(e)
+        this.$store.dispatch('showFlashMessage', {text: '登録に失敗しました'});
         return;
       })
       axios.post("/api/users", { user:  {name: this.name, email: this.email}})
       .then( res => {
         this.$store.state.currentUser = res.data;
-        alert("create acount!");
+        this.$store.dispatch('showFlashMessage', {text: '新規登録しました'});
         this.name = "";
         this.email = "";
         this.password = "";
       })
       .catch( error =>{
-        alert(error.message);
+        console.log(error.message);
+        this.$store.dispatch('showFlashMessage', {text: '登録に失敗しました'});
       })
      
     }
