@@ -4,6 +4,8 @@
     <v-card-text>
       <v-form
         v-model="valid"
+        ref="form"
+        
       >
         <v-text-field
           label="タイトル"
