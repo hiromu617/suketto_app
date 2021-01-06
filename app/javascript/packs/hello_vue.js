@@ -11,7 +11,7 @@ import App from '../app.vue'
 import router from '../router/router'
 import store from '../store'
 import Vuetify from "vuetify"; 
-import "vuetify/dist/vuetify.min.css"; 
+// import "vuetify/dist/vuetify.min.css"; 
 // import twemoji from 'twemoji'
 
 Vue.use(Vuetify); 
