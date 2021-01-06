@@ -5,13 +5,13 @@
 // like app/views/layouts/application.html.erb.
 // All it does is render <div>Hello Vue</div> at the bottom of the page.
 
+// import '@mdi/font/css/materialdesignicons.css'
 import Vue from 'vue'
 import App from '../app.vue'
 import router from '../router/router'
 import store from '../store'
 import Vuetify from "vuetify"; 
 import "vuetify/dist/vuetify.min.css"; 
-import '@mdi/font/css/materialdesignicons.css'
 // import twemoji from 'twemoji'
 
 Vue.use(Vuetify); 
