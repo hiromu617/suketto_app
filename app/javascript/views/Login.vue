@@ -1,5 +1,5 @@
 <template>
-  <v-card width="600px" class="mx-auto mt-10 card">
+  <v-card class="mx-auto mt-10 card">
     <v-card-title>
       <h2 class="display-1">ログイン</h2>
     </v-card-title>
@@ -90,5 +90,13 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+.card{
+      width: 600px;
+}
+  @media (max-width: 1000px) {
+    .card{
+      width: 100%;
+    }
+  }
 </style>
