@@ -6,7 +6,6 @@
         dark
         class="nav-bar"
         height="100"
-        dismissible
       >
         <v-toolbar-title>
           <router-link to="/" class="logo" >SUKETTO🛹</router-link>
@@ -42,6 +41,7 @@
               dense
               v-if="text"
               transition="fade-transition"
+              dismissible
             >
               {{ $store.state.text }}
             </v-alert>
