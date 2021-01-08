@@ -64,14 +64,14 @@ export default {
     }
   },
   methods: {
-    createQuestion: function(){
+    createQuestion: async function(){
       // console.log(this.tag)
       // console.log(this.tags)
       if (this.$refs.form.validate() === false){
-        this.$store.dispatch('showFlashMessage', {text: '失敗'});
+        this.$store.dispatch('showFlashMessage', {text: '正しく入力してください'});
         return
       }
-      axios.post('/api/questions', { 
+      await axios.post('/api/questions', { 
         question: {
            title: this.title, 
            body: this.body, 

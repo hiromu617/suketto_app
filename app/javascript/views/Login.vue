@@ -1,7 +1,7 @@
 <template>
   <v-card class="mx-auto mt-10 card">
     <v-card-title>
-      <h2 class="display-1">ログイン</h2>
+      <h2 class="display-1 login-head">ログイン</h2>
     </v-card-title>
     <v-card-text>
       <v-form
@@ -57,7 +57,7 @@ export default {
     },
   },
   methods: {
-    login(){
+    async login(){
       if (this.$refs.form.validate() === false){
         this.$store.dispatch('showFlashMessage', {text: '正しく入力してください', mode: "error"});
         return
@@ -69,7 +69,7 @@ export default {
       })  
       
       
-      axios.get("/api/user/", {
+      await axios.get("/api/user/", {
         params: {
           email: this.email
         }
@@ -81,9 +81,7 @@ export default {
       })
       .catch( e => {
         console.log(e.message)
-        return e.message;
       }) 
-
       this.email = "";
       this.password = "";
     }
@@ -94,9 +92,17 @@ export default {
 .card{
       width: 600px;
 }
-  @media (max-width: 1000px) {
-    .card{
-      width: 100%;
-    }
+@media (max-width: 1000px) {
+  .card{
+    width: 100%;
+    padding: 50px;
   }
+  .login-head{
+    font-size: 4rem!important;
+    margin-bottom: 20px;
+  }
+  .v-input{
+    margin-bottom: 20px;
+  }
+}
 </style>

@@ -136,9 +136,12 @@ export default new Vuex.Store({
     },
     showFlashMessage({commit}, message){
       commit('setMessage', message);
-      setTimeout(()=>{
+      setInterval(()=>{
         commit('setMessage', {text: '',mode: 'success'});
       },2500)
+      if(state.text === ''){
+        clearInterval();
+      }
     } 
     // showFlashMessage: ({state, commit}, message) => new Promise((resolve,reject)=>{
     //   if(state.timeoutId !== -1) {

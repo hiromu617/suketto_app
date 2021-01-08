@@ -4,21 +4,33 @@
         app
         color="indigo darken-4"
         dark
+        class="nav-bar"
         height="100"
+        dismissible
       >
         <v-toolbar-title>
           <router-link to="/" class="logo" >SUKETTO🛹</router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
+
         <temprate v-if="!isAuthenticated">
-          <v-btn to="/login" class="nav-item" color="indigo darken-4" width="100" flat>ログイン</v-btn>
-          <v-btn to="/register"  class="nav-item" color="indigo darken-4" width="100" flat>新規登録</v-btn>
+          <v-toolbar-items>
+            <v-btn to="/login" class="nav-item" text>ログイン</v-btn>
+            <v-divider vertical></v-divider>
+            <v-btn to="/register"  class="nav-item" text>新規登録</v-btn>
+          </v-toolbar-items>
         </temprate>
+
         <temprate v-if="isAuthenticated">
-          <span>{{ currentUser.name }}</span>
-          <v-btn :to="{ name: 'new' }" class="nav-item" color="indigo darken-4" width="100">質問する</v-btn>
-          <v-btn @click="logout" class="nav-item" color="indigo darken-4" width="100">ログアウト</v-btn>
+          <v-toolbar-items>
+            <span>{{ currentUser.name }}</span>
+            <v-divider vertical></v-divider>
+            <v-btn :to="{ name: 'new' }" class="nav-item" color="indigo darken-4" width="100">質問する</v-btn>
+            <v-divider vertical></v-divider>
+            <v-btn @click="logout" class="nav-item" color="indigo darken-4" width="100">ログアウト</v-btn>
+            </v-toolbar-items>
         </temprate>
+        
       </v-app-bar>
       <v-main>
         <v-container>
@@ -95,12 +107,11 @@ p {
   font-size: 1.8rem;
 }
 @media (max-width: 1000px) {
-  .v-app-bar{
-    height: 100px;
-  }
   .nav-item{
-    font-size: 1.8rem;
-    margin: 0 25px;
+    font-size: 2rem;
+  }
+  .logo{
+    font-size: 3rem;
   }
 }
 </style>

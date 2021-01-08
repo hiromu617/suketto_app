@@ -154,8 +154,8 @@ export default {
     }
   },
   methods: {
-    getData: function(){
-      axios.get('/api/questions/'+ this.$route.params.id)
+    getData: async function(){
+      await axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
         console.log(res.data)
@@ -203,6 +203,7 @@ export default {
     createAnswer: function(){
       if(!this.currentUserId){
         this.$store.dispatch('showFlashMessage', {text: 'ログインしてください'});
+        return;
       }
       console.log(this.currentUserId)
       axios.post('/api/answers/',{

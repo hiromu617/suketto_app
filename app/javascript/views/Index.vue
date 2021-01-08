@@ -41,7 +41,8 @@
               <v-chip
                 link
                 label
-                color="indigo darken-3"
+                color="indigo"
+                class="question-tag"
                 outlined
                 :to="{ name: 'tag',params: {id: tag.id} }"
               >
@@ -93,9 +94,9 @@ export default {
         this.questions = res.data
       })
     },
-    fetchQuestions: function(sortName){
+    fetchQuestions: async function(sortName){
       this.questions = []
-      axios.get('/api/questions', {
+      await axios.get('/api/questions', {
         params: {
           sort: sortName
         }
@@ -127,7 +128,9 @@ p{
 .v-aplication ul{
   margin-left: 0;
 }
-
+.question-tag{
+  margin-bottom: 10px;
+}
 @media (max-width: 1000px) {
   .v-card__title {
     font-size: 2.5rem;
@@ -137,16 +140,16 @@ p{
   }
   .question-user{
     font-size: 1.5rem;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   .question-date{
     font-size: 1.5rem;
   }
   .v-card{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
   }
   .question-status{
     font-size: 1.2rem;
@@ -161,6 +164,11 @@ p{
   }
   .v-pagination__item{
     font-size: 2rem;
+  }
+  .question-tag{
+    font-size: 1.2rem;
+    margin-top: 10px;
+    margin-bottom: 0;
   }
 }
 </style>
