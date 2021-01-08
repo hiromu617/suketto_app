@@ -24,9 +24,9 @@
           <v-toolbar-items>
             <span>{{ currentUser.name }}</span>
             <v-divider vertical></v-divider>
-            <v-btn :to="{ name: 'new' }" class="nav-item" color="indigo darken-4" width="100">質問する</v-btn>
+            <v-btn :to="{ name: 'new' }" class="nav-item" text>質問する</v-btn>
             <v-divider vertical></v-divider>
-            <v-btn @click="logout" class="nav-item" color="indigo darken-4" width="100">ログアウト</v-btn>
+            <v-btn @click="logout" class="nav-item" text>ログアウト</v-btn>
             </v-toolbar-items>
         </temprate>
         
@@ -109,6 +109,7 @@ p {
 @media (max-width: 1000px) {
   .nav-item{
     font-size: 2rem;
+    margin: 0 20px;
   }
   .logo{
     font-size: 3rem;
