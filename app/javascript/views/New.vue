@@ -92,7 +92,7 @@ export default {
         // alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
       })
-      router.go({name: 'index'})
+      // router.go({name: 'index'})
     }
   }
 }
