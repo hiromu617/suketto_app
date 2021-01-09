@@ -88,6 +88,7 @@ export default {
     logout() {
       this.$store.state.currentUser = {};
       this.$store.dispatch('logout');
+      this.$store.dispatch('showFlashMessage', {text: 'ログアウトしました'});
     },
   }
 }

@@ -76,14 +76,19 @@ export default {
       })
       .then( res => {
         console.log(res.data)
+        if(!res.data){
+          this.$store.dispatch('showFlashMessage', {text: 'ログインに失敗しました', mode: "error"});
+          this.$store.dispatch('logout')
+          return
+        }
         this.$store.state.currentUser = res.data;
         this.$refs.form.reset()
       })
       .catch( e => {
         console.log(e.message)
       }) 
-      this.email = "";
-      this.password = "";
+      // this.email = "";
+      // this.password = "";
     }
   }
 }

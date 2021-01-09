@@ -168,11 +168,11 @@ export default {
       })
       .catch(e => console.log(e));
     },
-    deleteQuestion: function(){
+    deleteQuestion: async function(){
       if(!this.questioner){
         return
       }
-      axios.delete('/api/questions/' + this.$route.params.id)
+      await axios.delete('/api/questions/' + this.$route.params.id)
       .then( res => {
         this.$store.dispatch('showFlashMessage', {text: '質問を削除しました'});
         router.push('/')

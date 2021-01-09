@@ -30,7 +30,10 @@ export default new Vuex.Store({
     setMessage: (state, payload) => {
       state.text = payload.text;
       state.mode = payload.mode;
-      // state.visible = true;
+      setTimeout(()=>{
+        state.text = "";
+        state.mode = "";
+      },2500)
     },
     // setMessageVisible: (state, value) => state.visible = value,
     // setMessageTimeoutId: (state, value) => state.timeoutId = value,
@@ -74,8 +77,7 @@ export default new Vuex.Store({
           dispatch('showFlashMessage', {text: 'ログインしました'});
         })
         .catch(e => {
-          // alert(e)
-          dispatch('showFlashMessage', {text: 'ログインに失敗しました'});
+          dispatch('showFlashMessage', {text: e});
         })
     },
     logout({ commit, dispatch }) {
@@ -84,7 +86,6 @@ export default new Vuex.Store({
       localStorage.removeItem('expiryTimeMs');
       localStorage.removeItem('refreshToken');
       router.replace('/');
-      dispatch('showFlashMessage', {text: 'ログアウトしました'});
     },
     async refreshIdToken({ dispatch }, refreshToken){
       await axiosRefresh.post(
@@ -117,7 +118,7 @@ export default new Vuex.Store({
           refreshIdToken: response.data.refreshIdToken,
         })
         router.push('/');
-        // dispatch('showFlashMessage', {text: '新規登録しました'});
+        dispatch('showFlashMessage', {text: '新規登録しました'});
       })
       .catch(e => {
         dispatch('showFlashMessage', {text: e});
@@ -134,14 +135,8 @@ export default new Vuex.Store({
           dispatch('refreshIdToken', authData.refreshToken);
         }, authData.expiresIn * 1000);
     },
-    showFlashMessage({commit}, message){
+    showFlashMessage({commit, state}, message){
       commit('setMessage', message);
-      setInterval(()=>{
-        commit('setMessage', {text: '',mode: 'success'});
-      },2500)
-      if(state.text === ''){
-        clearInterval();
-      }
     } 
     // showFlashMessage: ({state, commit}, message) => new Promise((resolve,reject)=>{
     //   if(state.timeoutId !== -1) {
@@ -166,7 +161,9 @@ export default new Vuex.Store({
 
     
   },
-  plugins: [createPersistedState(
-   
-  )]
+  plugins: [
+    createPersistedState({
+      paths: ['idToken', 'currentUser']
+    })
+  ]
 })

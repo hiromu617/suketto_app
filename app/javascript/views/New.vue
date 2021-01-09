@@ -71,6 +71,7 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: '正しく入力してください'});
         return
       }
+      
       await axios.post('/api/questions', { 
         question: {
            title: this.title, 
@@ -84,14 +85,14 @@ export default {
         this.title = ''
         this.body = ''
         this.tags = []
-        router.go({name: 'index'})
-        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'});
-        this.$store.dispatch('showFlashMessage', {text: ''});
+        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
+        router.push('/')
       })
       .catch( e => {
         // alert(e.message)
-        this.$store.dispatch('showFlashMessage', {text: '失敗'});
+        this.$store.dispatch('showFlashMessage', {text: e});
       })
+      router.go({name: 'index'})
     }
   }
 }
