@@ -26,15 +26,38 @@
      
     </v-card>
     <v-card v-else>
-      <v-card-title class="text-h3">{{question.title}}</v-card-title>
       <v-card-text>
-        <div v-if="question.best_answer_id">解決済み</div>
-        <p>{{answers.length}}件の回答</p>
-        <div v-for="tag in question.tags" :key="tag.id">
-            <router-link :to="{ name: 'tag',params: {id: tag.id} }">{{tag.name}}</router-link>
+        <div v-if="question.best_answer_id">
+          <v-chip
+            class="question-status"
+            color="red lighten-1"
+            text-color="white"
+          >
+          解決済み</v-chip>
         </div>
-        <p class="body-1">{{question.body}}</p>
-        <p class="caption">
+        <div v-else>
+          <v-chip
+            class="question-status"
+          >
+          未解決</v-chip>
+        </div>
+      <v-card-title class="text-h3">{{question.title}}</v-card-title>
+        <div v-for="tag in question.tags" :key="tag.id">
+          <v-chip
+            link
+            label
+            color="indigo"
+            class="question-tag"
+            outlined
+            :to="{ name: 'tag',params: {id: tag.id} }"
+          >
+          <v-icon left>mdi-label</v-icon>
+            {{tag.name}}
+          </v-chip>
+        </div>
+        <p>{{answers.length}}件の回答</p>
+        <p class="question-body">{{question.body}}</p>
+        <p class="question-info">
           投稿者: {{question.user.name}}<br>
           作成日: {{question.created_at}}<br>
           更新日: {{question.updated_at}}<br>
@@ -50,14 +73,14 @@
       v-bind:key="answer.id"
     >
       <div v-if="question.best_answer_id === answer.id">
-        <h3 class="text-h4">✨👑BEST ANSWER👑✨</h3>
+        <h3 class="answer-head">✨👑BEST ANSWER👑✨</h3>
         <v-card 
         class="card"
         color="yellow lighten-5"
         >
         <v-card-text>
-          <p class="body-1">{{answer.body}}</p>
-          <p class="caption">
+          <p class="answer-body">{{answer.body}}</p>
+          <p class="answer-info">
             {{answer.user.name}}<br>
             {{answer.created_at}}
           </p>
@@ -72,15 +95,15 @@
       </div>
       <div v-else>
         <div v-if="question.best_answer_id">
-          <h3>その他の回答</h3>
+          <h3 class="answer-head">その他の回答</h3>
         </div>
         <v-card 
           class="card"
         >
           <v-card-text>
             
-            <p class="body-1">{{answer.body}}</p>
-            <p class="caption">
+            <p class="answer-body">{{answer.body}}</p>
+            <p class="answer-info">
               {{answer.user.name}}<br>
               {{answer.created_at}}
             </p>
@@ -121,13 +144,6 @@ import router from '../router/router';
 import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
-  // directives: {
-  //   twemoji: {
-  //     inserted(el) {
-  //       el.innerHTML = twemoji.parse(el.innerHTML)
-  //     }
-  //   }
-  // },
   components: {
     VueTagsInput,
   },
@@ -246,10 +262,36 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .v-card{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-
+@media (max-width: 1000px) {
+  .question-status{
+    font-size: 1.7rem;
+    padding: 20px;
+  }
+  .question-body{
+    font-size: 2rem;
+    padding: 20px;
+  }
+  .question-info{
+    font-size: 1.5rem;
+  }
+  .answer-head{
+    font-size: 2.5rem;
+    margin: 20px 0;
+  }
+  .answer-body{
+    font-size: 3rem;
+    margin-bottom: 30px;
+  }
+  .answer-info{
+    font-size: 1.5rem;
+  }
+  .card{
+    padding: 30px 10px 0 10px ;
+  }
+}
 </style>

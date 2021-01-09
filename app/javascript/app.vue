@@ -22,7 +22,7 @@
 
         <temprate v-if="isAuthenticated">
           <v-toolbar-items>
-            <span>{{ currentUser.name }}</span>
+            <span class="currentuser-name">{{ currentUser.name }}</span>
             <v-divider vertical></v-divider>
             <v-btn :to="{ name: 'new' }" class="nav-item" text>質問する</v-btn>
             <v-divider vertical></v-divider>
@@ -114,6 +114,9 @@ p {
   }
   .logo{
     font-size: 3rem;
+  }
+  .currentuser-name{
+    font-size: 2rem;
   }
 }
 </style>

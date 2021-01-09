@@ -59,6 +59,7 @@
       <v-pagination
         v-model="page.currentPage"
         :length="page.totalPages"
+        circle
         @input="changePage"
       ></v-pagination>
   </div>
@@ -136,12 +137,14 @@ p{
     font-size: 2.5rem;
   }
   .v-tab{
-    font-size: 1.7rem;
+    font-size: 2rem;
+    width: 30%;
+    height: 50px;
+    padding: 30px 0;
   }
   .question-user{
     font-size: 1.5rem;
     margin-top: 20px;
-    margin-bottom: 20px;
   }
   .question-date{
     font-size: 1.5rem;
@@ -149,7 +152,7 @@ p{
   .v-card{
     padding-top: 30px;
     padding-bottom: 30px;
-    margin-bottom: 30px;
+    margin: 20px 0;
   }
   .question-status{
     font-size: 1.2rem;
@@ -160,9 +163,6 @@ p{
     margin-bottom: 15px;
   }
   .answer-number{
-    font-size: 2rem;
-  }
-  .v-pagination__item{
     font-size: 2rem;
   }
   .question-tag{

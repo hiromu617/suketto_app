@@ -82,17 +82,16 @@ export default {
       })
       .then( res => {
         // alert("question posted")
-        this.title = ''
-        this.body = ''
-        this.tags = []
-        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
+        // this.title = ''
+        // this.body = ''
+        // this.tags = []
         router.push('/')
+        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
       })
       .catch( e => {
         // alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
       })
-      // router.go({name: 'index'})
     }
   }
 }
