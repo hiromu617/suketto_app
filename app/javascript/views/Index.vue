@@ -34,7 +34,7 @@
             <div class="answer-number">{{question.answers.length}}</div>
           </v-card-text>
         </div>
-        <div>
+        <div class="card-content d-flex align-content-space-between flex-wrap">
           <v-card-title class="card-title" color="red">{{question.title}}</v-card-title>
           <v-card-text  class="">
             <div v-for="tag in question.tags" :key="tag.id">
@@ -46,12 +46,13 @@
                 outlined
                 :to="{ name: 'tag',params: {id: tag.id} }"
               >
-              <v-icon left>mdi-label</v-icon>
               {{tag.name}}
               </v-chip>
             </div>
-               <p class="question-user">{{question.user.name}}</p> 
-               <p class="question-date">{{question.created_at}}</p>
+              <div class="d-flex justify-space-between flex-nowrap">
+                <span class="question-user">{{question.user.name}}</span> 
+                <span class="question-date">{{question.created_at | newDate}}</span>
+              </div>
           </v-card-text>
         </div>
         
@@ -82,6 +83,11 @@ export default {
   },
   created: function () {
     this.fetchQuestions();
+  },
+  filters: {
+    newDate: function(val){
+      return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})([\w|:|.|+]*)/, "$1年$2月$3日")
+    }
   },
   methods: {
     changePage(val){
@@ -126,6 +132,9 @@ p{
 .card{
   margin-bottom: 10px;
 }
+.card-content{
+  width: 100%;
+}
 .v-aplication ul{
   margin-left: 0;
 }
@@ -144,7 +153,6 @@ p{
   }
   .question-user{
     font-size: 1.5rem;
-    margin-top: 20px;
   }
   .question-date{
     font-size: 1.5rem;
@@ -168,7 +176,7 @@ p{
   .question-tag{
     font-size: 1.2rem;
     margin-top: 10px;
-    margin-bottom: 0;
+    margin-bottom: 30px;
   }
 }
 </style>

@@ -42,6 +42,7 @@
               v-if="text"
               transition="fade-transition"
               dismissible
+              class="alert"
             >
               {{ $store.state.text }}
             </v-alert>
@@ -117,6 +118,8 @@ p {
   }
   .currentuser-name{
     font-size: 2rem;
+  }
+  .alert{
   }
 }
 </style>

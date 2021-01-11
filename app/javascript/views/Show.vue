@@ -59,8 +59,8 @@
         <p class="question-body">{{question.body}}</p>
         <p class="question-info">
           投稿者: {{question.user.name}}<br>
-          作成日: {{question.created_at}}<br>
-          更新日: {{question.updated_at}}<br>
+          作成日: {{question.created_at | newDate}}<br>
+          更新日: {{question.updated_at | newDate}}<br>
         </p>
         <div v-if="questioner">
           <v-btn  color="blue lighten-1" class="mr-3" dark @click="(editFlg = true)">編集</v-btn>
@@ -82,7 +82,7 @@
           <p class="answer-body">{{answer.body}}</p>
           <p class="answer-info">
             {{answer.user.name}}<br>
-            {{answer.created_at}}
+            {{answer.created_at | newDate}}
           </p>
         <div v-if="questioner && !question.best_answer_id">
           <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
@@ -105,7 +105,7 @@
             <p class="answer-body">{{answer.body}}</p>
             <p class="answer-info">
               {{answer.user.name}}<br>
-              {{answer.created_at}}
+              {{answer.created_at | newDate}}
             </p>
           <div v-if="questioner && !question.best_answer_id">
             <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
@@ -167,6 +167,11 @@ export default {
   computed: {
     currentUserId(){
       return this.$store.state.currentUser.id
+    }
+  },
+  filters: {
+    newDate: function(val){
+      return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})([\w|:|.|+]*)/, "$1年$2月$3日")
     }
   },
   methods: {
