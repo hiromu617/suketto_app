@@ -37,7 +37,7 @@
           required
         />
         <v-btn 
-          class="indigo darken-4" 
+          class="grey darken-4" 
           large dark 
           @click="register"
         >送信</v-btn>

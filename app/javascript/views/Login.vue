@@ -27,7 +27,7 @@
           :rules="passwordRules"
           required
          />
-          <v-btn color="indigo darken-4" large class="" dark @click="login">送信</v-btn>
+          <v-btn color="grey darken-4" large class="" dark @click="login">送信</v-btn>
       </v-form>
     </v-card-text>
   </v-card>

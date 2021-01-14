@@ -2,7 +2,7 @@
   <v-app id="app">
       <v-app-bar 
         app
-        color="indigo darken-4"
+        color="grey darken-4"
         dark
         class="nav-bar"
         height="100"
@@ -32,9 +32,7 @@
         
       </v-app-bar>
       <v-main>
-        <v-container>
-          {{mode}}
-            <v-alert 
+        <v-alert 
               type="success"
               color="blue"
               text
@@ -46,16 +44,7 @@
             >
               {{ $store.state.text }}
             </v-alert>
-            <v-alert 
-              type="error"
-              color="red"
-              text
-              dense
-              v-if="alertMessage"
-              transition="fade-transition"
-            >
-              {{ alertMessage }}
-            </v-alert>
+        <v-container>
           <router-view>
           </router-view>
         </v-container>
@@ -97,7 +86,6 @@ export default {
 
 <style scoped>
 #app{
-  background-color: #FAFAFA;
 }
 p {
   font-size: 2em;
@@ -108,6 +96,7 @@ p {
   text-decoration: none;
   font-size: 1.8rem;
 }
+
 @media (max-width: 1000px) {
   .nav-item{
     font-size: 2rem;

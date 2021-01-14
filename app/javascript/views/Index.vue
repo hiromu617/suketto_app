@@ -1,6 +1,12 @@
 <template>
   <div>
-      <v-tabs>
+    <main-view></main-view>
+      <v-tabs 
+        class="mt-5 mb-5" 
+        grow 
+        background-color="transparent"
+        color="grey darken-4"
+      >
         <v-tab class="" @click="sortQuestions('new')">新着順</v-tab>
         <v-tab class="" @click="sortQuestions('unsolved')">未解決</v-tab>
         <v-tab class=""  @click="sortQuestions('solved')">解決済み</v-tab>
@@ -58,6 +64,7 @@
         
       </v-card>
       <v-pagination
+        color="grey darken-4"
         v-model="page.currentPage"
         :length="page.totalPages"
         circle
@@ -69,6 +76,8 @@
 
 <script>
 import axios from '../plugins/axios';
+import mainVue from '../components/mainView';
+import MainView from '../components/mainView.vue';
 
 export default {
   data: function() {
@@ -80,6 +89,9 @@ export default {
         totalPages: 5,
       }
     }
+  },
+  components:{
+    MainView
   },
   created: function () {
     this.fetchQuestions();
