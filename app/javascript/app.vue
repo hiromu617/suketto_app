@@ -109,6 +109,7 @@ p {
 }
 .alert{
   position: fixed;
+  z-index: 100;
   top: 65px;
   width: 100%;
   margin: 0 auto;

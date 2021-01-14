@@ -72,7 +72,7 @@ export default {
         return
       }
       
-      await axios.post('/api/questions', { 
+      axios.post('/api/questions', { 
         question: {
            title: this.title, 
            body: this.body, 
@@ -91,7 +91,9 @@ export default {
       .catch( e => {
         // alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
+        return
       })
+      router.push('/')
     }
   }
 }

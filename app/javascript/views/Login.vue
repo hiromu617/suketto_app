@@ -63,11 +63,6 @@ export default {
         return
       }
 
-      this.$store.dispatch('login',{
-        email: this.email,
-        password: this.password
-      })  
-      
       
       await axios.get("/api/user/", {
         params: {
@@ -86,9 +81,15 @@ export default {
       })
       .catch( e => {
         console.log(e.message)
+        this.$store.dispatch('showFlashMessage', {text: e.message, mode: "error"});
+        return
       }) 
       // this.email = "";
       // this.password = "";
+      this.$store.dispatch('login',{
+        email: this.email,
+        password: this.password
+      })  
     }
   }
 }

@@ -54,7 +54,7 @@ export default new Vuex.Store({
     //     commit('updateIdToken', idToken);
     //   }
     // },
-    login({ dispatch }, authData) {
+    login({ dispatch, state }, authData) {
       axios
         .post(
           '/accounts:signInWithPassword?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
@@ -74,6 +74,7 @@ export default new Vuex.Store({
           dispatch('showFlashMessage', {text: 'ログインしました'});
         })
         .catch(e => {
+          state.currentUser = {}
           dispatch('showFlashMessage', {text: e});
         })
     },

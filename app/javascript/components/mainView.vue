@@ -2,13 +2,14 @@
   <v-row class="main-visual">
     <v-column class="main-message">
       <h1 class="chatch ">Solve your problem!</h1>
-      <p class="caption-message">SUKETTOはスケボーの悩みを解決するためのサービスです。</p>
       <template v-if="!isAuthenticated">
+        <p class="caption-message">SUKETTOはスケボーの悩みを解決するためのサービスです。ログインすると、質問や回答する事ができます。</p>
         <v-btn to="/login" class="botton mr-5" color="grey darken-4" dark x-large>Login</v-btn>
         <v-btn to="/register" class="botton" color="grey darken-4" dark x-large>Sign Up</v-btn>
       </template>
       <template v-else>
-        <v-btn to="/about" class="botton mr-5" color="grey darken-4" dark x-large>About</v-btn>
+        <p class="caption-message">SUKETTOはスケボーの悩みを解決するためのサービスです。下のボタンから質問してみよう。</p>
+        <v-btn to="/new" class="botton mr-5" color="grey darken-4" dark x-large>Post a question</v-btn>
       </template>
     </v-column>
     <v-column class="boy-image">
