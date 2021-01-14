@@ -62,7 +62,31 @@ export default {
   color: #212121;
   opacity: 0.9;
 }
-@media (max-width: 1000px){
+@media (max-width: 800px){
+  .main-visual{
+    text-align: center;
+    padding: 0;
+  }
+  .main-message{
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 5px;
+  }
+  .chatch{
+    font-size: 2rem;
+  }
+  .image{
+    width: 100%;
+  }
+  .boy-image{
+    width: 100%;
+  }
+  .caption-message{
+    text-align: center;
+    padding: 20px;
+  }
+}
+/* @media (max-width: 1000px){
   .main-visual{
     text-align: center;
   }
@@ -84,5 +108,5 @@ export default {
     font-size: 3rem;
     padding: 40px!important;
   }
-}
+} */
 </style>

@@ -97,17 +97,4 @@ export default {
 .card{
       width: 600px;
 }
-@media (max-width: 1000px) {
-  .card{
-    width: 100%;
-    padding: 50px;
-  }
-  .login-head{
-    font-size: 4rem!important;
-    margin-bottom: 20px;
-  }
-  .v-input{
-    margin-bottom: 20px;
-  }
-}
 </style>

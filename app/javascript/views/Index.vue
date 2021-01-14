@@ -153,42 +153,4 @@ p{
 .question-tag{
   margin-bottom: 10px;
 }
-@media (max-width: 1000px) {
-  .v-card__title {
-    font-size: 2.5rem;
-  }
-  .v-tab{
-    font-size: 2rem;
-    width: 30%;
-    height: 50px;
-    padding: 30px 0;
-  }
-  .question-user{
-    font-size: 1.5rem;
-  }
-  .question-date{
-    font-size: 1.5rem;
-  }
-  .v-card{
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin: 20px 0;
-  }
-  .question-status{
-    font-size: 1.2rem;
-  }
-  .answer-number-label{
-    font-size: 1.5rem;
-    margin-top: 10px;
-    margin-bottom: 15px;
-  }
-  .answer-number{
-    font-size: 2rem;
-  }
-  .question-tag{
-    font-size: 1.2rem;
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
-}
 </style>

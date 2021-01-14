@@ -125,12 +125,12 @@
             <v-textarea
               label="あなたの回答"
               v-model="answerBody"
-              background-color="indigo lighten-5"
+              background-color="grey lighten-3"
               counter
               auto-grow
               filled
             ></v-textarea>
-            <v-btn  color="indigo darken-4" large dark block @click="createAnswer">回答する</v-btn>
+            <v-btn  color="grey darken-4" large dark block @click="createAnswer">回答する</v-btn>
           </v-card-text>
         </v-form>
       </v-card>
@@ -271,32 +271,5 @@ export default {
 .v-card{
   margin-top: 10px;
   margin-bottom: 10px;
-}
-@media (max-width: 1000px) {
-  .question-status{
-    font-size: 1.7rem;
-    padding: 20px;
-  }
-  .question-body{
-    font-size: 2rem;
-    padding: 20px;
-  }
-  .question-info{
-    font-size: 1.5rem;
-  }
-  .answer-head{
-    font-size: 2.5rem;
-    margin: 20px 0;
-  }
-  .answer-body{
-    font-size: 3rem;
-    margin-bottom: 30px;
-  }
-  .answer-info{
-    font-size: 1.5rem;
-  }
-  .card{
-    padding: 30px 10px 0 10px ;
-  }
 }
 </style>

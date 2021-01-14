@@ -29,23 +29,38 @@ Vue.directive('emoji', {
   }
 })
 
-store.dispatch('autoLogin').then(
-  document.addEventListener('DOMContentLoaded', () => {
-    const app = new Vue({
-      router,
-      store,
-      vuetify,
-      icons: {
-        iconfont: 'mdi', // default - only for display purposes
-      },
-      render: h => h(App),
-      created() {
-      }
-    }).$mount()
-    document.body.appendChild(app.$el)
-    // console.log(app)
-  })
-);
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new Vue({
+    router,
+    store,
+    vuetify,
+    icons: {
+      iconfont: 'mdi', // default - only for display purposes
+    },
+    render: h => h(App),
+    created() {
+    }
+  }).$mount()
+  document.body.appendChild(app.$el)
+  // console.log(app)
+})
+// store.dispatch('autoLogin').then(
+//   document.addEventListener('DOMContentLoaded', () => {
+//     const app = new Vue({
+//       router,
+//       store,
+//       vuetify,
+//       icons: {
+//         iconfont: 'mdi', // default - only for display purposes
+//       },
+//       render: h => h(App),
+//       created() {
+//       }
+//     }).$mount()
+//     document.body.appendChild(app.$el)
+//     // console.log(app)
+//   })
+// );
 
 
 

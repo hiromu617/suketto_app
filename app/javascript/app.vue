@@ -5,7 +5,6 @@
         color="grey darken-4"
         dark
         class="nav-bar"
-        height="100"
       >
         <v-toolbar-title>
           <router-link to="/" class="logo" >SUKETTO🛹</router-link>
@@ -29,27 +28,40 @@
             <v-btn @click="logout" class="nav-item" text>ログアウト</v-btn>
             </v-toolbar-items>
         </temprate>
-        
       </v-app-bar>
-      <v-main>
+      
+      <v-main class="pb-10 mb-10">
         <v-alert 
               type="success"
               color="blue"
-              text
-              dense
               v-if="text"
               transition="fade-transition"
               dismissible
+              elevation="25"
               class="alert"
             >
               {{ $store.state.text }}
-            </v-alert>
+          </v-alert>
         <v-container>
           <router-view>
           </router-view>
         </v-container>
       </v-main>
-      <v-footer app>
+      <v-footer 
+        app
+        dark
+        paddless
+        absolute
+      >
+      <v-row justify="center" no-gutters>
+        <v-col
+          class=" py-2 text-center white--text"
+          cols="12"
+          dark
+        >
+          {{ new Date().getFullYear() }} — <strong>SUKETTO</strong>
+        </v-col>
+      </v-row>
       </v-footer>
   </v-app>
 </template>
@@ -94,21 +106,14 @@ p {
 .logo{
   color: white;
   text-decoration: none;
-  font-size: 1.8rem;
 }
-
-@media (max-width: 1000px) {
-  .nav-item{
-    font-size: 2rem;
-    margin: 0 20px;
-  }
-  .logo{
-    font-size: 3rem;
-  }
-  .currentuser-name{
-    font-size: 2rem;
-  }
-  .alert{
-  }
+.alert{
+  position: fixed;
+  top: 65px;
+  width: 100%;
+  margin: 0 auto;
+}
+.v-footer{
+  margin-top: 100px;
 }
 </style>

@@ -30,7 +30,7 @@
           :tags="tags"
           @tags-changed="newTags => tags = newTags"
         />
-        <v-btn  color="indigo darken-4" large block dark type="submit" @click="createQuestion">質問する</v-btn>
+        <v-btn  color="grey darken-4" class="mt-5" large block dark type="submit" @click="createQuestion">質問する</v-btn>
       </v-form>
     </v-card-text>
   </v-card>
