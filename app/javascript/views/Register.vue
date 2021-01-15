@@ -56,6 +56,7 @@
 
 <script>
 import axios from '../plugins/axios';
+import imageCompression from "browser-image-compression";
 
 export default {
   data() {
@@ -81,9 +82,24 @@ export default {
     };
   },
   methods: {
-    setImage(e){
-      console.log(e)
-      this.avatar = e;
+    async getCompressImageFileAsync(file) {
+    const options = {
+      maxSizeMB: 1, // 最大ファイルサイズ
+      maxWidthOrHeight: 800 // 最大画像幅もしくは高さ
+    };
+    try {
+      // 圧縮画像の生成
+      return await imageCompression(file, options);
+    } catch (error) {
+      console.error("getCompressImageFileAsync is error", error);
+      throw error;
+    }
+  },
+    async setImage(file){
+      const compImage = await this.getCompressImageFileAsync(file);
+      console.log(compImage)
+      console.log(file)
+      this.avatar = compImage;
     },
     async register(){
       if (this.$refs.form.validate() === false){

@@ -63,6 +63,13 @@
                       <img :src="question.user.avatar.url" alt="">
                     </v-avatar>
                   </template>
+                  <template v-else>
+                    <v-avatar color="grey">
+                      <v-icon dark>
+                        mdi-account-circle
+                      </v-icon>
+                    </v-avatar>
+                  </template>
                   {{question.user.name}}
                 </span> 
                 <span class="question-date">{{question.created_at | newDate}}</span>
