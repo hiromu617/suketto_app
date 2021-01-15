@@ -77,7 +77,7 @@ export default {
           return
         }
         this.$store.state.currentUser = res.data;
-        this.$refs.form.reset()
+        // this.$refs.form.reset()
       })
       .catch( e => {
         console.log(e.message)

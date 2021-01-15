@@ -93,7 +93,7 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: e});
         return
       })
-      router.push('/')
+      router.push('/') 
     }
   }
 }

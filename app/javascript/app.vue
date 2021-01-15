@@ -21,6 +21,11 @@
 
         <temprate v-if="isAuthenticated">
           <v-toolbar-items>
+            <template v-if="currentUser.avatar.url">
+              <v-avatar class="mr-2">
+                <img :src="currentUser.avatar.url" alt="">
+              </v-avatar>
+            </template>
             <span class="currentuser-name">{{ currentUser.name }}</span>
             <v-divider vertical></v-divider>
             <v-btn :to="{ name: 'new' }" class="nav-item" text>質問する</v-btn>

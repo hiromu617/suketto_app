@@ -14,6 +14,7 @@ class Api::UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    # binding.pry
     if @user.save
       render json: @user
     else
@@ -23,9 +24,15 @@ class Api::UsersController < ApplicationController
 
   private
 
+  # def user_params
+  #   params.fetch(:user, {}).permit(
+  #     :name, :email, avatar: {}
+  #   )
+  # end
+
   def user_params
-    params.fetch(:user, {}).permit(
-      :name, :email
+    params.permit(
+      :name, :email, :avatar
     )
   end
 

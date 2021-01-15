@@ -18,6 +18,12 @@
           :counter="10"
           required
         />
+        <v-file-input   
+          @change="setImage"
+          type="file"
+          label="画像"
+          accept="image/*"
+        />
         <v-text-field
           prepend-icon="mdi-email"
           type="email"
@@ -41,6 +47,7 @@
           large dark 
           @click="register"
         >送信</v-btn>
+        {{avatar}}
       </v-form>
     </v-card-text>
     
@@ -69,10 +76,15 @@ export default {
         v => !!v || 'この項目は必須です',
         v => /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{6,20}$/.test(v) || '半角6~20文字英大文字・小文字・数字それぞれ１文字以上含む必要があります',
       ],
-      showPassword: false
+      showPassword: false,
+      avatar: ""
     };
   },
   methods: {
+    setImage(e){
+      console.log(e)
+      this.avatar = e;
+    },
     async register(){
       if (this.$refs.form.validate() === false){
         this.$store.dispatch('showFlashMessage', {text: '正しく入力してください'});
@@ -87,8 +99,19 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: '登録に失敗しました'});
         return;
       })
-      await axios.post("/api/users", { user:  {name: this.name, email: this.email}})
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }
+      var formData = new FormData();
+      formData.append('name', this.name)
+      formData.append('email', this.email)
+      formData.append('avatar', this.avatar)
+      // await axios.post("/api/users", { user:  {name: this.name, email: this.email, avatar: this.avatar}})
+      await axios.post("/api/users",formData,config)
       .then( res => {
+        console.log(res.data)
         this.$store.state.currentUser = res.data;
         this.$store.dispatch('showFlashMessage', {text: '新規登録しました'});
         this.name = "";

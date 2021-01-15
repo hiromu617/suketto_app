@@ -56,7 +56,15 @@
               </v-chip>
             </div>
               <div class="d-flex justify-space-between flex-nowrap">
-                <span class="question-user">{{question.user.name}}</span> 
+                
+                <span class="question-user">
+                  <template v-if="question.user.avatar.url">
+                    <v-avatar>
+                      <img :src="question.user.avatar.url" alt="">
+                    </v-avatar>
+                  </template>
+                  {{question.user.name}}
+                </span> 
                 <span class="question-date">{{question.created_at | newDate}}</span>
               </div>
           </v-card-text>
