@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   root to: 'home#index'
   
   get 'api/user/', to: "api/users#show"
+  get 'api/users/:id', to: "api/users#showById"
 
   namespace :api do
-    resources :users, only: [:index, :create]
+    resources :users, only: [:index, :create, :update]
     resources :questions
     resources :answers
     resources :tags, only: [:show]

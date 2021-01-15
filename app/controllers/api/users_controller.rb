@@ -9,13 +9,27 @@ class Api::UsersController < ApplicationController
   def show
     @user = User.find_by(email: params[:email])
     render json: @user
-    # render 'show', handlers: 'jbuilder'
+  end
+
+  def showById
+    @user = User.find_by(id: params[:id])
+    render json: @user
   end
 
   def create
     @user = User.new(user_params)
     # binding.pry
     if @user.save
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    @user = User.find_by(id: params[:id])
+    # binding.pry
+    if @user.update(user_params)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -35,9 +49,5 @@ class Api::UsersController < ApplicationController
       :name, :email, :avatar
     )
   end
-
-  # def show_params
-  #   params.require(:user).permit(:email)
-  # end
 
 end

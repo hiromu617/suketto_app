@@ -7,6 +7,7 @@ import Index from "../views/Index";
 import Show from "../views/Show";
 import New from "../views/New";
 import Tag from "../views/Tag";
+import User from "../views/User";
 
 Vue.use(Router);
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/tag/:id/',
       component: Tag,
       name: 'tag'
+    },
+    {
+      path: '/user/:id/',
+      component: User,
+      name: 'user'
     },
   ]
 });

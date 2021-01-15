@@ -15,6 +15,7 @@
       <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
+        outlined
         class="card d-flex"
         :to="{ name: 'show', params: {id: question.id } }"
       >
@@ -57,7 +58,7 @@
             </div>
               <div class="d-flex justify-space-between flex-nowrap">
                 
-                <span class="question-user">
+                <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
                   <template v-if="question.user.avatar.url">
                     <v-avatar>
                       <img :src="question.user.avatar.url" alt="">
@@ -71,7 +72,7 @@
                     </v-avatar>
                   </template>
                   {{question.user.name}}
-                </span> 
+                </v-btn> 
                 <span class="question-date">{{question.created_at | newDate}}</span>
               </div>
           </v-card-text>

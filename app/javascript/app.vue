@@ -21,12 +21,21 @@
 
         <temprate v-if="isAuthenticated">
           <v-toolbar-items>
-            <template v-if="currentUser.avatar.url">
-              <v-avatar class="mr-2">
-                <img :src="currentUser.avatar.url" alt="">
-              </v-avatar>
-            </template>
-            <span class="currentuser-name">{{ currentUser.name }}</span>
+            <v-btn class="currentuser-name" :to="{ name: 'user', params: {id: currentUser.id } }" text>
+              <template v-if="currentUser.avatar.url">
+                <v-avatar>
+                  <img :src="currentUser.avatar.url" alt="">
+                </v-avatar>
+              </template>
+              <template v-else>
+                <v-avatar color="grey">
+                  <v-icon dark>
+                    mdi-account-circle
+                  </v-icon>
+                </v-avatar>
+              </template>
+              {{currentUser.name}}
+            </v-btn>
             <v-divider vertical></v-divider>
             <v-btn :to="{ name: 'new' }" class="nav-item" text>質問する</v-btn>
             <v-divider vertical></v-divider>
