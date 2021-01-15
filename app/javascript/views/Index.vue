@@ -60,12 +60,12 @@
                 
                 <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
                   <template v-if="question.user.avatar.url">
-                    <v-avatar>
+                    <v-avatar size="40">
                       <img :src="question.user.avatar.url" alt="">
                     </v-avatar>
                   </template>
                   <template v-else>
-                    <v-avatar color="grey">
+                    <v-avatar color="grey" size="40">
                       <v-icon dark>
                         mdi-account-circle
                       </v-icon>

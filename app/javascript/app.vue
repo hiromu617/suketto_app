@@ -23,12 +23,12 @@
           <v-toolbar-items>
             <v-btn class="currentuser-name" :to="{ name: 'user', params: {id: currentUser.id } }" text>
               <template v-if="currentUser.avatar.url">
-                <v-avatar>
+                <v-avatar class="mr-2" size="40">
                   <img :src="currentUser.avatar.url" alt="">
                 </v-avatar>
               </template>
               <template v-else>
-                <v-avatar color="grey">
+                <v-avatar color="grey" class="mr-2" size="40">
                   <v-icon dark>
                     mdi-account-circle
                   </v-icon>
@@ -130,5 +130,8 @@ p {
 }
 .v-footer{
   margin-top: 100px;
+}
+.nav-item{
+  margin: auto 0;
 }
 </style>
