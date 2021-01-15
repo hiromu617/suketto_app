@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="editFlg">
+    <v-card v-if="editFlg" outlined>
       <v-card-text>
         <v-form>
           <v-text-field
@@ -25,7 +25,7 @@
       </v-card-text>
      
     </v-card>
-    <v-card v-else>
+    <v-card v-else outlined>
       <v-card-text>
         <div v-if="question.best_answer_id">
           <v-chip
@@ -56,9 +56,24 @@
           </v-chip>
         </div>
         <p>{{answers.length}}件の回答</p>
-        <p class="question-body">{{question.body}}</p>
+        <p class="question-body text-h5">{{question.body}}</p>
         <p class="question-info">
-          投稿者: {{question.user.name}}<br>
+          <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+            <template v-if="question.user.avatar.url">
+              <v-avatar size="40">
+                <img :src="question.user.avatar.url" alt="">
+              </v-avatar>
+            </template>
+            <template v-else>
+              <v-avatar color="grey" size="40">
+                <v-icon dark>
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+            </template>
+            {{question.user.name}}
+          </v-btn> 
+          <br>
           作成日: {{question.created_at | newDate}}<br>
           更新日: {{question.updated_at | newDate}}<br>
         </p>
@@ -77,11 +92,27 @@
         <v-card 
         class="card"
         color="yellow lighten-5"
+        outlined
         >
         <v-card-text>
-          <p class="answer-body">{{answer.body}}</p>
+          <p class="answer-body text-h5">{{answer.body}}</p>
           <p class="answer-info">
-            {{answer.user.name}}<br>
+            <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+            <template v-if="question.user.avatar.url">
+              <v-avatar size="40">
+                <img :src="question.user.avatar.url" alt="">
+              </v-avatar>
+            </template>
+            <template v-else>
+              <v-avatar color="grey" size="40">
+                <v-icon dark>
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+            </template>
+            {{question.user.name}}
+          </v-btn> 
+           <br>
             {{answer.created_at | newDate}}
           </p>
         <div v-if="questioner && !question.best_answer_id">
@@ -99,12 +130,28 @@
         </div>
         <v-card 
           class="card"
+          outlined
         >
           <v-card-text>
             
-            <p class="answer-body">{{answer.body}}</p>
+            <p class="answer-body text-h5">{{answer.body}}</p>
             <p class="answer-info">
-              {{answer.user.name}}<br>
+              <v-btn class="question-user" :to="{ name: 'user', params: {id: answer.user.id } }" text>
+            <template v-if="answer.user.avatar.url">
+              <v-avatar size="40">
+                <img :src="answer.user.avatar.url" alt="">
+              </v-avatar>
+            </template>
+            <template v-else>
+              <v-avatar color="grey" size="40">
+                <v-icon dark>
+                  mdi-account-circle
+                </v-icon>
+              </v-avatar>
+            </template>
+            {{answer.user.name}}
+          </v-btn> 
+              <br>
               {{answer.created_at | newDate}}
             </p>
           <div v-if="questioner && !question.best_answer_id">
@@ -119,7 +166,7 @@
       
     </div>
       
-      <v-card v-if="!questioner && !question.best_answer_id">
+      <v-card v-if="!questioner && !question.best_answer_id" outlined>
         <v-form>
           <v-card-text>
             <v-textarea
