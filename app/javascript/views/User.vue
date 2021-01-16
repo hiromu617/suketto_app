@@ -117,6 +117,8 @@ export default{
       axios.put('/api/users/' + this.$route.params.id,formData,config)
       .then( res => {
         console.log(res)
+        this.$store.state.currentUser = {}
+        this.$store.state.currentUser = res.data
         this.editFlg = false
         this.$store.dispatch('showFlashMessage', {text: 'ユーザーを更新しました'});
         router.push('/')
