@@ -74,8 +74,16 @@
             {{question.user.name}}
           </v-btn> 
           <br>
-          作成日: {{question.created_at | newDate}}<br>
-          更新日: {{question.updated_at | newDate}}<br>
+          <v-icon>
+              mdi-calendar
+          </v-icon>
+          {{question.created_at | newDate}}<br>
+          <template v-if="question.created_at !== question.updated_at">
+            <v-icon>
+              mdi-update
+            </v-icon>
+            {{question.updated_at | newDate}}<br>
+          </template>
         </p>
         <div v-if="questioner">
           <v-btn  color="blue lighten-1" class="mr-3" dark @click="(editFlg = true)">編集</v-btn>

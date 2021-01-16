@@ -1,28 +1,79 @@
 <template>
   <div>
     <h3 class="text-h4">🏷{{tag.name}}のついた質問</h3>
-      <v-card 
+        <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
-        class="card"
+        outlined
+        class="card d-flex"
         :to="{ name: 'show', params: {id: question.id } }"
       >
-        <v-card-title>{{question.title}}</v-card-title>
-        <v-card-text>
-          <div v-for="tag in question.tags" :key="tag.id">
-            <router-link :to="{ name: 'tag',params: {id: tag.id} }">{{tag.id}}{{tag.name}}</router-link>
-          </div>
-          <div v-if="question.best_answer_id">解決済み</div>
-          <div v-else>未解決</div>
-        回答数: {{question.answers.length}}<br>
-        投稿者: {{question.user.name}}<br>
-        作成日: {{question.created_at}}
-        </v-card-text>
+        <div class="text-center">
+          <v-card-text>
+            <div v-if="question.best_answer_id">
+              <v-chip
+                class="question-status"
+                color="red lighten-1"
+                text-color="white"
+              >
+              解決済み
+              </v-chip>
+            </div>
+            <div v-else>
+              <v-chip
+                class="question-status"
+              >
+              未解決
+              </v-chip>
+            </div>
+            <p class="answer-number-label"> 回答 </p>
+            <div class="answer-number">{{question.answers.length}}</div>
+          </v-card-text>
+        </div>
+        <div class="card-content d-flex align-content-space-between flex-wrap">
+          <v-card-title class="card-title" color="red">{{question.title}}</v-card-title>
+          <v-card-text  class="">
+            <div v-for="tag in question.tags" :key="tag.id">
+              <v-chip
+                link
+                label
+                color="indigo"
+                class="question-tag"
+                outlined
+                :to="{ name: 'tag',params: {id: tag.id} }"
+              >
+              {{tag.name}}
+              </v-chip>
+            </div>
+              <div class="d-flex justify-space-between flex-nowrap">
+                
+                <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+                  <template v-if="question.user.avatar.url">
+                    <v-avatar size="40">
+                      <img :src="question.user.avatar.url" alt="">
+                    </v-avatar>
+                  </template>
+                  <template v-else>
+                    <v-avatar color="grey" size="40">
+                      <v-icon dark>
+                        mdi-account-circle
+                      </v-icon>
+                    </v-avatar>
+                  </template>
+                  {{question.user.name}}
+                </v-btn> 
+                <span class="question-date">{{question.created_at | newDate}}</span>
+              </div>
+          </v-card-text>
+        </div>
+        
       </v-card>
       <v-pagination
+        color="grey darken-4"
         v-model="page.currentPage"
         :length="page.totalPages"
         @input="changePage"
+        circle
       ></v-pagination>
   </div>
   
@@ -44,6 +95,11 @@ export default {
   },
   mounted: function () {
     this.fetchTagQuestions();
+  },
+  filters: {
+    newDate: function(val){
+      return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})([\w|:|.|+]*)/, "$1年$2月$3日")
+    }
   },
   methods: {
     changePage(val){
@@ -89,5 +145,21 @@ export default {
 }
 .v-aplication ul{
   margin-left: 0;
+}
+p{
+  margin: 0;
+  padding: 0;
+}
+.card{
+  margin-bottom: 10px;
+}
+.card-content{
+  width: 100%;
+}
+.v-aplication ul{
+  margin-left: 0;
+}
+.question-tag{
+  margin-bottom: 10px;
 }
 </style>
