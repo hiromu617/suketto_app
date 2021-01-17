@@ -33,23 +33,29 @@
         <div class="card-content d-flex align-content-space-between flex-wrap">
           <v-card-title class="card-title" color="red">{{question.title}}</v-card-title>
           <v-card-text  class="">
-            <div v-for="tag in question.tags" :key="tag.id">
+            <span v-for="tag in question.tags" :key="tag.id">
               <v-chip
                 link
                 label
-                color="indigo"
-                class="question-tag"
+                color="grey darken-4"
+                class="question-tag mr-2"
                 outlined
                 :to="{ name: 'tag',params: {id: tag.id} }"
               >
               {{tag.name}}
               </v-chip>
-            </div>
+            </span>
               <div class="d-flex justify-space-between flex-nowrap">
                 
-                <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+                <v-btn 
+                  class="question-user" 
+                  :to="{ name: 'user', params: {id: question.user.id } }" 
+                  text
+                  link
+                  style="text-transform: none"
+                >
                   <template v-if="question.user.avatar.url">
-                    <v-avatar size="40">
+                    <v-avatar size="35" class="mr-2">
                       <img :src="question.user.avatar.url" alt="">
                     </v-avatar>
                   </template>
@@ -62,7 +68,7 @@
                   </template>
                   {{question.user.name}}
                 </v-btn> 
-                <span class="question-date">{{question.created_at | newDate}}</span>
+                <span class="question-date caption">{{question.created_at | newDate}}</span>
               </div>
           </v-card-text>
         </div>
@@ -161,5 +167,11 @@ p{
 }
 .question-tag{
   margin-bottom: 10px;
+}
+.question-user{
+  padding: 0!important;
+}
+.question-date{
+  margin: auto 0;
 }
 </style>

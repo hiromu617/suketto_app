@@ -21,25 +21,40 @@
 
         <temprate v-if="isAuthenticated">
           <v-toolbar-items>
-            <v-btn class="currentuser-name" :to="{ name: 'user', params: {id: currentUser.id } }" text>
-              <template v-if="currentUser.avatar.url">
-                <v-avatar class="mr-2" size="40">
-                  <img :src="currentUser.avatar.url" alt="">
-                </v-avatar>
+            <v-menu 
+              offset-y
+              transition="slide-y-transition"
+              bottom
+            >
+              <template v-slot:activator="{ on, attrs }">
+              <v-btn 
+                class="currentuser-name" 
+                text
+                v-bind="attrs"
+                v-on="on"
+              >
+                <template v-if="currentUser.avatar.url">
+                  <v-avatar class="mr-2" size="40">
+                    <img :src="currentUser.avatar.url" alt="">
+                  </v-avatar>
+                </template>
+                <template v-else>
+                  <v-avatar color="grey" class="mr-2" size="40">
+                    <v-icon dark>
+                      mdi-account-circle
+                    </v-icon>
+                  </v-avatar>
+                </template>
+              </v-btn>
               </template>
-              <template v-else>
-                <v-avatar color="grey" class="mr-2" size="40">
-                  <v-icon dark>
-                    mdi-account-circle
-                  </v-icon>
-                </v-avatar>
-              </template>
-              {{currentUser.name}}
-            </v-btn>
-            <v-divider vertical></v-divider>
-            <v-btn :to="{ name: 'new' }" class="nav-item" text>質問する</v-btn>
-            <v-divider vertical></v-divider>
-            <v-btn @click="logout" class="nav-item" text>ログアウト</v-btn>
+              <v-list>
+                <v-list-item :to="{ name: 'user', params: {id: currentUser.id } }" >プロフィール</v-list-item>
+                <v-list-item :to="{ name: 'new' }" >質問する</v-list-item>
+                <v-list-item @click="logout">ログアウト</v-list-item>
+              </v-list>
+            </v-menu>
+            
+            
             </v-toolbar-items>
         </temprate>
       </v-app-bar>

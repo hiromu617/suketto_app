@@ -41,7 +41,7 @@
           >
           未解決</v-chip>
         </div>
-      <v-card-title class="text-h3">{{question.title}}</v-card-title>
+      <v-card-title class="">{{question.title}}</v-card-title>
         <div v-for="tag in question.tags" :key="tag.id">
           <v-chip
             link
@@ -56,16 +56,22 @@
           </v-chip>
         </div>
         <p>{{answers.length}}件の回答</p>
-        <p class="question-body text-h5">{{question.body}}</p>
+        <p class="question-body">{{question.body}}</p>
         <p class="question-info">
-          <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+          <v-btn 
+            class="question-user" 
+            :to="{ name: 'user', params: {id: question.user.id } }" 
+            text
+            link
+            style="text-transform: none"
+          >
             <template v-if="question.user.avatar.url">
-              <v-avatar size="40">
+              <v-avatar size="40" class="mr-2">
                 <img :src="question.user.avatar.url" alt="">
               </v-avatar>
             </template>
             <template v-else>
-              <v-avatar color="grey" size="40">
+              <v-avatar color="grey" size="35">
                 <v-icon dark>
                   mdi-account-circle
                 </v-icon>
@@ -103,16 +109,22 @@
         outlined
         >
         <v-card-text>
-          <p class="answer-body text-h5">{{answer.body}}</p>
+          <p class="answer-body">{{answer.body}}</p>
           <p class="answer-info">
-            <v-btn class="question-user" :to="{ name: 'user', params: {id: question.user.id } }" text>
+            <v-btn 
+              class="question-user" 
+              :to="{ name: 'user', params: {id: question.user.id } }" 
+              text
+              link
+              style="text-transform: none"
+            >
             <template v-if="question.user.avatar.url">
-              <v-avatar size="40">
+              <v-avatar size="35" class="mr-2">
                 <img :src="question.user.avatar.url" alt="">
               </v-avatar>
             </template>
             <template v-else>
-              <v-avatar color="grey" size="40">
+              <v-avatar color="grey" size="35" class="mr-2">
                 <v-icon dark>
                   mdi-account-circle
                 </v-icon>
