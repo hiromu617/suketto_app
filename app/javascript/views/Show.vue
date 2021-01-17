@@ -113,14 +113,14 @@
           <p class="answer-info">
             <v-btn 
               class="question-user" 
-              :to="{ name: 'user', params: {id: question.user.id } }" 
+              :to="{ name: 'user', params: {id: answer.user.id } }" 
               text
               link
               style="text-transform: none"
             >
-            <template v-if="question.user.avatar.url">
+            <template v-if="answer.user.avatar.url">
               <v-avatar size="35" class="mr-2">
-                <img :src="question.user.avatar.url" alt="">
+                <img :src="answer.user.avatar.url" alt="">
               </v-avatar>
             </template>
             <template v-else>
@@ -130,7 +130,7 @@
                 </v-icon>
               </v-avatar>
             </template>
-            {{question.user.name}}
+            {{answer.user.name}}
           </v-btn> 
            <br>
             {{answer.created_at | newDate}}
@@ -157,14 +157,14 @@
           <p class="answer-info">
             <v-btn 
               class="question-user" 
-              :to="{ name: 'user', params: {id: question.user.id } }" 
+              :to="{ name: 'user', params: {id: answer.user.id } }" 
               text
               link
               style="text-transform: none"
             >
-            <template v-if="question.user.avatar.url">
+            <template v-if="answer.user.avatar.url">
               <v-avatar size="35" class="mr-2">
-                <img :src="question.user.avatar.url" alt="">
+                <img :src="answer.user.avatar.url" alt="">
               </v-avatar>
             </template>
             <template v-else>
@@ -174,7 +174,7 @@
                 </v-icon>
               </v-avatar>
             </template>
-            {{question.user.name}}
+            {{answer.user.name}}
           </v-btn> 
            <br>
             {{answer.created_at | newDate}}
