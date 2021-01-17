@@ -149,39 +149,44 @@
           <h3 class="answer-head">その他の回答</h3>
         </div>
         <v-card 
-          class="card"
-          outlined
+        class="card"
+        outlined
         >
-          <v-card-text>
-            
-            <p class="answer-body text-h5">{{answer.body}}</p>
-            <p class="answer-info">
-              <v-btn class="question-user" :to="{ name: 'user', params: {id: answer.user.id } }" text>
-            <template v-if="answer.user.avatar.url">
-              <v-avatar size="40">
-                <img :src="answer.user.avatar.url" alt="">
+        <v-card-text>
+          <p class="answer-body">{{answer.body}}</p>
+          <p class="answer-info">
+            <v-btn 
+              class="question-user" 
+              :to="{ name: 'user', params: {id: question.user.id } }" 
+              text
+              link
+              style="text-transform: none"
+            >
+            <template v-if="question.user.avatar.url">
+              <v-avatar size="35" class="mr-2">
+                <img :src="question.user.avatar.url" alt="">
               </v-avatar>
             </template>
             <template v-else>
-              <v-avatar color="grey" size="40">
+              <v-avatar color="grey" size="35" class="mr-2">
                 <v-icon dark>
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
             </template>
-            {{answer.user.name}}
+            {{question.user.name}}
           </v-btn> 
-              <br>
-              {{answer.created_at | newDate}}
-            </p>
-          <div v-if="questioner && !question.best_answer_id">
-            <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
-          </div>
-          <div v-if="currentUserId === answer.user_id">
-            <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
-          </div>
-          </v-card-text>
-        </v-card>
+           <br>
+            {{answer.created_at | newDate}}
+          </p>
+        <div v-if="questioner && !question.best_answer_id">
+          <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
+        </div>
+        <div v-if="currentUserId === answer.user_id">
+          <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
+        </div>
+        </v-card-text>
+      </v-card>
       </div>
       
     </div>
