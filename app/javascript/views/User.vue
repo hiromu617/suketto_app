@@ -77,7 +77,7 @@ export default{
       await axios.get('/api/users/'+ this.$route.params.id)
       .then( res => {
         this.user = res.data
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch(e => console.log(e));
       if(this.$store.state.currentUser.id === this.user.id){
@@ -99,8 +99,8 @@ export default{
   },
     async setImage(file){
       const compImage = await this.getCompressImageFileAsync(file);
-      console.log(compImage)
-      console.log(file)
+      // console.log(compImage)
+      // console.log(file)
       this.avatar = compImage;
     },
     userUpdate: async function(){
@@ -116,7 +116,7 @@ export default{
       }
       axios.put('/api/users/' + this.$route.params.id,formData,config)
       .then( res => {
-        console.log(res)
+        // console.log(res)
         this.$store.state.currentUser = {}
         this.$store.state.currentUser = res.data
         this.editFlg = false

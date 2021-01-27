@@ -97,8 +97,8 @@ export default {
   },
     async setImage(file){
       const compImage = await this.getCompressImageFileAsync(file);
-      console.log(compImage)
-      console.log(file)
+      // console.log(compImage)
+      // console.log(file)
       this.avatar = compImage;
     },
     async register(){
@@ -127,7 +127,7 @@ export default {
       // await axios.post("/api/users", { user:  {name: this.name, email: this.email, avatar: this.avatar}})
       await axios.post("/api/users",formData,config)
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.$store.state.currentUser = res.data;
         this.$store.dispatch('showFlashMessage', {text: '新規登録しました'});
         this.name = "";

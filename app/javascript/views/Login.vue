@@ -70,7 +70,7 @@ export default {
         }
       })
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         if(!res.data){
           this.$store.dispatch('showFlashMessage', {text: 'ログインに失敗しました', mode: "error"});
           this.$store.dispatch('logout')

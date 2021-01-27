@@ -251,7 +251,7 @@ export default {
       await axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
-        console.log(res.data)
+        // console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
         }
@@ -298,7 +298,7 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: 'ログインしてください'});
         return;
       }
-      console.log(this.currentUserId)
+      // console.log(this.currentUserId)
       axios.post('/api/answers/',{
         answer: {
           body: this.answerBody,
@@ -308,7 +308,7 @@ export default {
       })
       .then( res => {
         this.answers.push(res.data);
-        console.log(res)
+        // console.log(res)
         this.$store.dispatch('showFlashMessage', {text: '質問に回答しました'});
       })
       .catch(e => alert(e))

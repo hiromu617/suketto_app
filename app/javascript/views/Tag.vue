@@ -115,7 +115,7 @@ export default {
         }
       })
       .then( res => {
-        console.log(res)
+        // console.log(res)
         // for(let i = 0; i < res.data.length; i++){
         //   this.questions.push(res.data[i]);
         // }
@@ -126,7 +126,7 @@ export default {
     fetchTagQuestions: function(){
       axios.get('/api/tags/' + this.$route.params.id)
       .then( res => {
-        console.log(res)
+        // console.log(res)
         this.tag = res.data
       })
       axios.get('/api/questions',{
@@ -135,7 +135,7 @@ export default {
         }
       })
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.page.totalPages = Number(res.headers["total-pages"])
         this.questions = res.data
       })

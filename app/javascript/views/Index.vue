@@ -143,7 +143,7 @@ export default {
         }
       })
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.page.totalPages = Number(res.headers["total-pages"])
         this.page.currentPage = 1
         this.questions = res.data
