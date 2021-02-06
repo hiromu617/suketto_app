@@ -28,9 +28,9 @@ class Api::QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    tag_list = params[:question][:tag_list].map { |i| i[:text]}
+    # tag_list = params[:tag_list].map { |i| i[:text]}
     if @question.save
-      @question.save_tags(tag_list)
+      # @question.save_tags(tag_list)
       render json: @question
     else
       render json: @question.errors, status: :unprocessable_entity
@@ -39,8 +39,8 @@ class Api::QuestionsController < ApplicationController
 
   def update
     @question = Question.find_by(id: params[:id])
-    if params[:question][:tag_list]
-      tag_list = params[:question][:tag_list].map { |i| i[:text]}
+    if params[:tag_list]
+      tag_list = params[:tag_list].map { |i| i[:text]}
       if @question.update(update_params)
         @question.save_tags(tag_list)
         render json: @question
@@ -65,14 +65,14 @@ class Api::QuestionsController < ApplicationController
   private
 
   def question_params
-    params.fetch(:question, {}).permit(
-      :user_id,:title,:body, :tag_list
+    params.permit(
+      :user_id,:title,:body, :tag_list,:video
     )
   end
 
   def update_params
-    params.fetch(:question, {}).permit(
-      :title,:body,:best_answer_id, :tag_list
+    params.permit(
+      :title,:body,:best_answer_id, :tag_list, :video
     )
   end
 end

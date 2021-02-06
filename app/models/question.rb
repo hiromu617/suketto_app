@@ -6,7 +6,9 @@ class Question < ApplicationRecord
   validates :title, presence: true, length: { maximum: 20 } 
   validates :body, presence: true, length: { maximum: 50 } 
   scope :from_tag, -> (tag_id)  { where(id: tag_ids = QuestionTag.where(tag_id: tag_id).select(:question_id))}
+  mount_uploader :video, VideoUploader
   
+
   def save_tags(tags)
     current_tags = self.tags.pluck(:name) unless self.tags.nil?
     old_tags = current_tags - tags

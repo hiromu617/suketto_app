@@ -30,6 +30,12 @@
           :tags="tags"
           @tags-changed="newTags => tags = newTags"
         />
+        <v-file-input   
+          @change="setVideo"
+          type="file"
+          label="動画"
+          accept="video/*"
+        />
         <v-btn  color="grey darken-4" class="mt-5" large block dark type="submit" @click="createQuestion">質問する</v-btn>
       </v-form>
     </v-card-text>
@@ -60,10 +66,14 @@ export default {
         v => v.length <= 50 || '50文字以内で入力してください',
       ],
       tag: '',
-      tags: []
+      tags: [],
+      video: '',
     }
   },
   methods: {
+    setVideo: function(file){
+      this.video = file;
+    },
     createQuestion: async function(){
       // console.log(this.tag)
       // console.log(this.tags)
@@ -71,15 +81,29 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: '正しく入力してください'});
         return
       }
-      
-      axios.post('/api/questions', { 
-        question: {
-           title: this.title, 
-           body: this.body, 
-           user_id: this.$store.state.currentUser.id,
-           tag_list: this.tags
+
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data'
         }
-      })
+      }
+      var formData = new FormData();
+      formData.append('title', this.title)
+      formData.append('body', this.body)
+      formData.append('user_id', this.$store.state.currentUser.id)
+      // formData.append('tag_list', this.tags)
+      formData.append('video', this.video)
+      console.log(this.video)
+      console.log(formData)
+      await axios.post("/api/questions", formData, config)
+      // axios.post('/api/questions', { 
+      //   question: {
+      //      title: this.title, 
+      //      body: this.body, 
+      //      user_id: this.$store.state.currentUser.id,
+      //      tag_list: this.tags
+      //   }
+      // })
       .then( res => {
         // alert("question posted")
         // this.title = ''
@@ -89,7 +113,7 @@ export default {
         this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
       })
       .catch( e => {
-        // alert(e.message)
+        alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
         return
       })

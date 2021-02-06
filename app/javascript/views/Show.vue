@@ -57,6 +57,7 @@
         </div>
         <p>{{answers.length}}件の回答</p>
         <p class="question-body">{{question.body}}</p>
+        <video :src="question.video.url" controls="controls"></video>
         <p class="question-info">
           <v-btn 
             class="question-user" 
@@ -251,6 +252,7 @@ export default {
       await axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
+        console.log(this.question)
         // console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
