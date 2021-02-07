@@ -57,7 +57,7 @@
         </div>
         <p>{{answers.length}}件の回答</p>
         <p class="question-body">{{question.body}}</p>
-        <video :src="question.video.url" controls="controls"></video>
+        <video v-if="question.video.url" :src="question.video.url" controls="controls"></video>
         <p class="question-info">
           <v-btn 
             class="question-user" 
