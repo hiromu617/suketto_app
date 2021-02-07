@@ -28,7 +28,9 @@ class Api::QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    # tag_list = params[:tag_list].map { |i| i[:text]}
+    # if params[:tag_list]
+    #   tag_list = params[:tag_list].map { |i| i[:text]}
+    # end
     if @question.save
       # @question.save_tags(tag_list)
       render json: @question
@@ -37,12 +39,17 @@ class Api::QuestionsController < ApplicationController
     end
   end
 
+  # def tag_create
+  #   tag_list = tag_params[:tag_list].map { |i| i[:text]}
+  #   @question.save_tags(tag_list)
+  # end
+
   def update
     @question = Question.find_by(id: params[:id])
     if params[:tag_list]
-      tag_list = params[:tag_list].map { |i| i[:text]}
+      # tag_list = params[:tag_list].map { |i| i[:text]}
       if @question.update(update_params)
-        @question.save_tags(tag_list)
+        # @question.save_tags(tag_list)
         render json: @question
       else
         render json: @question.errors
@@ -57,6 +64,12 @@ class Api::QuestionsController < ApplicationController
     
   end
 
+  def deleteVideo
+    @question = Question.find(params[:id])
+    @question.remove_video!
+    @question.save
+  end
+
   def destroy
     @question = Question.find(params[:id])
     @question.destroy
@@ -66,9 +79,15 @@ class Api::QuestionsController < ApplicationController
 
   def question_params
     params.permit(
-      :user_id,:title,:body, :tag_list,:video
+      :user_id,:title,:body, :video
     )
   end
+
+  # def tag_params
+  #   params.permit(
+  #     :tag_list
+  #   )
+  # end
 
   def update_params
     params.permit(

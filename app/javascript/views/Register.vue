@@ -21,7 +21,7 @@
         <v-file-input   
           @change="setImage"
           type="file"
-          label="画像"
+          label="プロフィール画像"
           accept="image/*"
         />
         <v-text-field

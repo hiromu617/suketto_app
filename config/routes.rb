@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   
   get 'api/user/', to: "api/users#show"
   get 'api/users/:id', to: "api/users#showById"
+  delete 'api/deleteVideo/:id', to: "api/questions#deleteVideo"
 
   namespace :api do
     resources :users, only: [:index, :create, :update]

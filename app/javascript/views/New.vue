@@ -22,20 +22,28 @@
           auto-grow
           filled
           :rules="bodyRules"
-          :counter="50"
+          :counter="200"
           required
         ></v-textarea>
-        <vue-tags-input
+        <!-- <vue-tags-input
           v-model="tag"
           :tags="tags"
           @tags-changed="newTags => tags = newTags"
-        />
-        <v-file-input   
-          @change="setVideo"
-          type="file"
-          label="動画"
-          accept="video/*"
-        />
+        /> -->
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-file-input   
+              @change="setVideo"
+              type="file"
+              label="動画"
+              accept="video/*"
+              v-bind="attrs"
+              v-on="on"
+              class="video-input"
+            />
+          </template>
+          <span>10秒以内の動画を1つ添付することがができます</span>
+        </v-tooltip>
         <v-btn  color="grey darken-4" class="mt-5" large block dark type="submit" @click="createQuestion">質問する</v-btn>
       </v-form>
     </v-card-text>
@@ -63,16 +71,36 @@ export default {
       body: '',
       bodyRules: [
         v => !!v || 'この項目は必須です',
-        v => v.length <= 50 || '50文字以内で入力してください',
+        v => v.length <= 200 || '200文字以内で入力してください',
       ],
       tag: '',
       tags: [],
       video: '',
+      videoRules: [
+        v => videoValid == false || '50文字以内で入力してください',
+      ],
     }
   },
   methods: {
     setVideo: function(file){
+      this.checkDuration(file)
       this.video = file;
+      console.log(this.file)
+    },
+    checkDuration: function(file){
+      const video = document.createElement('video');
+      const fileURL = URL.createObjectURL(file);
+      video.src = fileURL;
+      video.ondurationchange = function() {
+        if(parseInt(this.duration) > 10) {
+          alert("動画の長さが10秒を超えています。");
+          this.valid=false
+        } 
+        // else {
+        //   alert(this.duration);
+        // }
+        URL.revokeObjectURL(this.src);
+      };
     },
     createQuestion: async function(){
       // console.log(this.tag)
@@ -92,10 +120,12 @@ export default {
       formData.append('body', this.body)
       formData.append('user_id', this.$store.state.currentUser.id)
       // formData.append('tag_list', this.tags)
-      formData.append('video', this.video)
-      console.log(this.video)
+      if (this.video){
+        formData.append('video', this.video)
+      }
+      // console.log(this.video)
       console.log(formData)
-      await axios.post("/api/questions", formData, config)
+      axios.post("/api/questions", formData, config)
       // axios.post('/api/questions', { 
       //   question: {
       //      title: this.title, 
@@ -109,16 +139,20 @@ export default {
         // this.title = ''
         // this.body = ''
         // this.tags = []
-        router.push('/')
         this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
       })
       .catch( e => {
         alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
-        return
       })
       router.push('/') 
     }
   }
 }
 </script>
+<style scoped>
+.video-input{
+  height: 30px;
+  margin-bottom: 55px;
+}
+</style>
