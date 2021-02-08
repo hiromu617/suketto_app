@@ -61,7 +61,6 @@
         </v-card-actions>
       </div>
       <v-card-text class="user-card">
-        <p v-if="!user.profile" class="subtitle-1">自己紹介文がまだ設定されていません</p>
         <p class="subtitle-1">{{user.profile}}</p>
       <p class="subtitle-2">
         質問数 <span class="subtitle-1 font-weight-medium">{{user.questions.length}}</span>
