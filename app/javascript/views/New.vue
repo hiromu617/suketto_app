@@ -120,9 +120,7 @@ export default {
       formData.append('body', this.body)
       formData.append('user_id', this.$store.state.currentUser.id)
       // formData.append('tag_list', this.tags)
-      if (this.video){
-        formData.append('video', this.video)
-      }
+      formData.append('video', this.video)
       // console.log(this.video)
       console.log(formData)
       axios.post("/api/questions", formData, config)
