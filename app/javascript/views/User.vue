@@ -7,8 +7,16 @@
             label="ユーザー名"
             type="text"
             v-model="user.name"
+            counter=10
           >
           </v-text-field>
+          <v-textarea
+            label="プロフィール"
+            type="text"
+            v-model="user.profile"
+            counter=100
+          >
+          </v-textarea>
           <v-file-input 
             @change="setImage"
             type="file"
@@ -23,33 +31,45 @@
       </v-card>
     </v-expand-transition>
   <v-card outlined class="user-card d-flex pa-10" v-else>
-    <v-row>
+    <div class="avatar-wrap">
       <template v-if="user.avatar.url">
-        <v-avatar size="128" class="my-5">
+        <v-avatar size="120" class="my-5">
           <img :src="user.avatar.url" alt="">
         </v-avatar>
       </template>
       <template v-else>
-          <v-avatar color="grey" size="128" class="my-5">
+          <v-avatar color="grey" size="120" class="my-5">
           <v-icon dark>
             mdi-account-circle
           </v-icon>
         </v-avatar>
       </template>
-    </v-row>
-    <v-row v-if="!editFlg">
-      <v-card-title class="text-h3">{{user.name}}</v-card-title>
+    </div>
+    <div
+      class="profile-wrap"
+      v-if="!editFlg"
+    >
+      <div class="d-flex">
+        <v-card-title class="text-h4 font-weight-bold">{{user.name}}</v-card-title>
+        <v-spacer></v-spacer>
+        <v-card-actions >
+          <v-btn v-if="isCurrentUser" color="black" outlined small class="" @click="(editFlg = true)">
+            <v-icon dark x-small left>
+              mdi-wrench
+            </v-icon>プロフィールを編集する
+        </v-btn>
+        </v-card-actions>
+      </div>
       <v-card-text class="user-card">
-      <p>
-        質問数 {{user.questions.length}}<br>
-        回答数 {{user.answers.length}}
+        <p v-if="!user.profile" class="subtitle-1">自己紹介文がまだ設定されていません</p>
+        <p class="subtitle-1">{{user.profile}}</p>
+      <p class="subtitle-2">
+        質問数 <span class="subtitle-1 font-weight-medium">{{user.questions.length}}</span>
+        回答数 <span class="subtitle-1 font-weight-medium">{{user.answers.length}}</span>
       </p>
-      <v-card-actions >
-        <v-btn v-if="isCurrentUser" color="blue lighten-1" class="" dark @click="(editFlg = true)">編集</v-btn>
-      </v-card-actions>
+      
     </v-card-text> 
-    </v-row>
-    
+    </div>
   </v-card>  
 </div>
   
@@ -66,7 +86,7 @@ export default{
       user: {},
       editFlg: false,
       isCurrentUser: false,
-      avatar: ""
+      avatar: "",
     }
   },
   created: function () {
@@ -111,6 +131,7 @@ export default{
       }
       var formData = new FormData();
       formData.append('name', this.user.name)
+      formData.append('profile', this.user.profile)
       if(this.avatar){
         formData.append('avatar', this.avatar)
       }
@@ -134,5 +155,25 @@ export default{
 <style scoped>
 .user-card{
   margin: 0 auto;
+  flex-wrap: wrap;
+}
+.avatar{
+  width: 100%;
+}
+.avatar-wrap{
+  width: 30%;
+  text-align: center;
+}
+.profile-wrap{
+  width: 70%;
+}
+@media (max-width: 767px) {
+  .avatar-wrap{
+    width: 100%;
+    text-align: left;
+  }
+  .profile-wrap{
+    width: 100%;
+  }
 }
 </style>
