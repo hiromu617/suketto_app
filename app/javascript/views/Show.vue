@@ -57,7 +57,7 @@
         </div>
         <p>{{answers.length}}件の回答</p>
         <p class="question-body">{{question.body}}</p>
-        <video v-if="question.video.url" :src="question.video.url" controls="controls"></video>
+        <video class="video" v-if="question.video.url" :src="question.video.url" controls="controls"></video>
         <p class="question-info">
           <v-btn 
             class="question-user" 
@@ -345,5 +345,11 @@ export default {
 .v-card{
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.video{
+  max-width: 100%;
+}
+.question-user{
+  margin: 10px 0;
 }
 </style>
