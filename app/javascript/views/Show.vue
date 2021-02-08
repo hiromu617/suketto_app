@@ -279,11 +279,10 @@ export default {
         return
       }
       axios.put('/api/questions/' + this.$route.params.id,{
-        question: {
-          title: this.question.title,
-          body: this.question.body,
-          tag_list: this.tags
-        }
+        title: this.question.title,
+        body: this.question.body,
+        // tag_list: this.tags
+        
       })
       .then( res => {
         this.editFlg = false
@@ -329,9 +328,7 @@ export default {
     },
     createBA: function(answer_id){
       axios.put('/api/questions/' + this.$route.params.id,{
-        question: {
-          best_answer_id: answer_id
-        }
+        best_answer_id: answer_id
       })
       .then( res => {
         this.$store.dispatch('showFlashMessage', {text: 'ベストアンサーを決定しました'});
