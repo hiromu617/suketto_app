@@ -138,8 +138,8 @@ p {
 }
 .alert{
   position: fixed;
-  z-index: 100;
-  top: 65px;
+  z-index: 999;
+  top: 56px;
   width: 100%;
   margin: 0 auto;
 }
