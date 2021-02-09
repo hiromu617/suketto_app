@@ -188,11 +188,77 @@
         </div>
         </v-card-text>
       </v-card>
+      <v-expansion-panels flat>
+        <v-expansion-panel
+        >
+        <v-expansion-panel-header>
+          <template v-if="!answer.replies">返信する</template>
+          <template v-else>{{answer.replies.length}}件の返信</template>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content class="pl-10">
+          <v-card
+            v-for="reply in answer.replies"
+            :key="reply.id"
+            outlined
+            class="my-3"
+          >
+          <v-card-text>
+              <p class="answer-body">{{reply.body}}</p>
+              <p class="answer-info">
+                <v-btn 
+                  class="question-user" 
+                  :to="{ name: 'user', params: {id: reply.user.id } }" 
+                  text
+                  link
+                  style="text-transform: none"
+                >
+                <template v-if="reply.user.avatar.url">
+                  <v-avatar size="35" class="mr-2">
+                    <img :src="reply.user.avatar.url" alt="">
+                  </v-avatar>
+                </template>
+                <template v-else>
+                <v-avatar color="grey" size="35" class="mr-2">
+                  <v-icon dark>
+                    mdi-account-circle
+                  </v-icon>
+                </v-avatar>
+                </template>
+                 {{reply.user.name}}
+                 <span v-if="questioner">質問者</span>
+                </v-btn> 
+                <br>
+                {{reply.created_at | newDate}}
+              </p>
+            <div v-if="currentUserId === reply.user_id">
+              <v-btn color="red lighten-1" dark @click="deleteReply(reply.id)">削除</v-btn>
+            </div>
+          </v-card-text>
+          </v-card>
+          <v-card>
+            <v-form>
+            <v-card-text>
+              <v-textarea
+                label="返信"
+                v-model="replyBody"
+                background-color="grey lighten-3"
+                height="100"
+                counter
+                auto-grow
+                filled
+              ></v-textarea>
+              <v-btn  color="grey darken-4" dark block @click="createReply(answer.id)">返信する</v-btn>
+              </v-card-text>
+            </v-form>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      </v-expansion-panels>
       </div>
-      
     </div>
-      
-      <v-card v-if="!questioner && !question.best_answer_id" outlined>
+    <template v-if="!questioner && !question.best_answer_id" >
+      <v-divider class="mb-3"></v-divider>
+      <v-card outlined>
         <v-form>
           <v-card-text>
             <v-textarea
@@ -207,6 +273,7 @@
           </v-card-text>
         </v-form>
       </v-card>
+    </template>
   </div>
   
 </template>
@@ -228,7 +295,8 @@ export default {
       tags: [],
       questioner: false,
       editFlg: false,
-      answerBody: ''
+      answerBody: '',
+      replyBody: ''
     }
   },
   created: function () {
@@ -248,12 +316,43 @@ export default {
     }
   },
   methods: {
+    createReply: async function(answer_id){
+      if(!this.currentUserId){
+        this.$store.dispatch('showFlashMessage', {text: 'ログインしてください'});
+        return;
+      }
+      axios.post('/api/replies/',{
+        reply: {
+          body: this.replyBody,
+          answer_id: answer_id,
+          user_id: this.$store.state.currentUser.id
+        }
+      })
+      .then( res => {
+        // this.answers.push(res.data);
+        // console.log(res)
+        this.$store.dispatch('showFlashMessage', {text: '質問に回答しました'});
+      })
+      .catch(e => alert(e))
+
+      this.replyBody = ''
+    },
+    deleteReply: async function(reply_id){
+      axios.delete('/api/replies/' + reply_id)
+      .then(res => {
+        this.$store.dispatch('showFlashMessage', {text: '返信を削除しました'});
+      })
+      .catch(e => console.log(e.message))
+      this.answers=[]
+      this.question = {}
+      this.getData()
+    },
     getData: async function(){
       await axios.get('/api/questions/'+ this.$route.params.id)
       .then( res => {
         this.question = res.data
-        console.log(this.question)
-        // console.log(res.data)
+        // console.log(this.question)
+        console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
         }
@@ -339,7 +438,7 @@ export default {
 }
 </script>
 <style scoped>
-.v-card{
+.card{
   margin-top: 10px;
   margin-bottom: 10px;
 }

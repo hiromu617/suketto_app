@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_124232) do
+ActiveRecord::Schema.define(version: 2021_02_09_013758) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -64,6 +64,16 @@ ActiveRecord::Schema.define(version: 2021_02_08_124232) do
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "answer_id", null: false
+    t.string "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["answer_id"], name: "index_replies_on_answer_id"
+    t.index ["user_id"], name: "index_replies_on_user_id"
+  end
+
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -84,4 +94,6 @@ ActiveRecord::Schema.define(version: 2021_02_08_124232) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "questions", "users"
+  add_foreign_key "replies", "answers"
+  add_foreign_key "replies", "users"
 end
