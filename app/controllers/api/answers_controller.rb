@@ -3,12 +3,12 @@ class Api::AnswersController < ApplicationController
 
   def index
     @answers = Answer.order('created_at DESC')
-    render json: @answers, include: 'user', 'replies'
+    render json: @answers, include: 'user'
   end
 
   def show
     @answer = Answer.find_by(id: params[:id])
-    render json: @answer, include: 'user', 'replies'
+    render json: @answer, include: 'user'
   end
 
 
@@ -43,6 +43,4 @@ class Api::AnswersController < ApplicationController
     )
   end
 
-
 end
-
