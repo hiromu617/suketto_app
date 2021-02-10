@@ -40,7 +40,7 @@
                 </template>
                 <template v-else>
                   <v-avatar color="grey" class="mr-2" size="40">
-                    <v-icon dark>
+                    <v-icon dark color="white">
                       mdi-account-circle
                     </v-icon>
                   </v-avatar>

@@ -27,21 +27,22 @@
     </v-card>
     <v-card v-else outlined>
       <v-card-text>
-        <div v-if="question.best_answer_id">
+        <div>
           <v-chip
             class="question-status"
             color="red lighten-1"
             text-color="white"
+            v-if="question.best_answer_id"
           >
           解決済み</v-chip>
-        </div>
-        <div v-else>
           <v-chip
+            v-else
             class="question-status"
           >
           未解決</v-chip>
+          <span style="float: right" class="text-h6 mr-5 black--text">{{answers.length}}件の回答</span>
         </div>
-      <v-card-title class="">{{question.title}}</v-card-title>
+      <v-card-title class="text-h4 black--text">{{question.title}}</v-card-title>
         <div v-for="tag in question.tags" :key="tag.id">
           <v-chip
             link
@@ -55,12 +56,21 @@
             {{tag.name}}
           </v-chip>
         </div>
-        <p>{{answers.length}}件の回答</p>
-        <p class="question-body">{{question.body}}</p>
-        <video class="video" v-if="question.video.url" :src="question.video.url" controls="controls"></video>
-        <p class="question-info">
+        <p class="question-info" style="text-align: left;">
+          <v-icon>
+              mdi-calendar
+          </v-icon>
+          {{question.created_at | newDate}}
+          <template v-if="question.created_at !== question.updated_at">
+            <v-icon>
+              mdi-update
+            </v-icon>
+            {{question.updated_at | newDate}}
+          </template>
+        </p>
+        <div style="text-align: right;">
           <v-btn 
-            class="question-user" 
+            class="question-user mr-10" 
             :to="{ name: 'user', params: {id: question.user.id } }" 
             text
             link
@@ -73,31 +83,31 @@
             </template>
             <template v-else>
               <v-avatar color="grey" size="35">
-                <v-icon dark>
+                <v-icon dark color="white">
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
             </template>
             {{question.user.name}}
           </v-btn> 
-          <br>
-          <v-icon>
-              mdi-calendar
-          </v-icon>
-          {{question.created_at | newDate}}<br>
-          <template v-if="question.created_at !== question.updated_at">
-            <v-icon>
-              mdi-update
-            </v-icon>
-            {{question.updated_at | newDate}}<br>
-          </template>
-        </p>
+        </div>
+        
+        <div class="question-body text-h6 ma-5 black--text">{{question.body}}</div>
+        <div style="text-align: center;">
+          <video class="video" v-if="question.video.url" :src="question.video.url" controls="controls"></video>
+        </div>
         <div v-if="questioner">
           <v-btn  color="blue lighten-1" class="mr-3" dark @click="(editFlg = true)">編集</v-btn>
           <v-btn  color="red lighten-1" dark @click="deleteQuestion">削除</v-btn>
         </div>
       </v-card-text>
     </v-card>
+    
+    <div class="py-3">
+      <div class="text-h6"><span class="text-h5 red--text">{{answers.length}}</span>件の回答</div>
+      <v-divider v-if="answers.length !== 0"></v-divider>
+    </div>
+
     <div
       v-for="answer in answers" 
       v-bind:key="answer.id"
@@ -110,8 +120,10 @@
         outlined
         >
         <v-card-text>
-          <p class="answer-body">{{answer.body}}</p>
-          <p class="answer-info">
+          <p class="answer-body subtitle-1">{{answer.body}}</p>
+          <div class="answer-info d-flex">
+            <v-spacer></v-spacer>
+            <div style="margin: auto 0;" class="caption">{{answer.created_at | newDate}}</div>
             <v-btn 
               class="question-user" 
               :to="{ name: 'user', params: {id: answer.user.id } }" 
@@ -126,16 +138,14 @@
             </template>
             <template v-else>
               <v-avatar color="grey" size="35" class="mr-2">
-                <v-icon dark>
+                <v-icon dark color="white">
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
             </template>
             {{answer.user.name}}
           </v-btn> 
-           <br>
-            {{answer.created_at | newDate}}
-          </p>
+          </div>
         <div v-if="questioner && !question.best_answer_id">
           <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
         </div>
@@ -154,8 +164,10 @@
         outlined
         >
         <v-card-text>
-          <p class="answer-body">{{answer.body}}</p>
-          <p class="answer-info">
+          <p class="answer-body subtitle-1 black--text">{{answer.body}}</p>
+          <div class="answer-info d-flex">
+            <v-spacer></v-spacer>
+            <div style="margin: auto 0;" class="caption">{{answer.created_at | newDate}}</div>
             <v-btn 
               class="question-user" 
               :to="{ name: 'user', params: {id: answer.user.id } }" 
@@ -170,16 +182,14 @@
             </template>
             <template v-else>
               <v-avatar color="grey" size="35" class="mr-2">
-                <v-icon dark>
+                <v-icon dark color="white">
                   mdi-account-circle
                 </v-icon>
               </v-avatar>
             </template>
             {{answer.user.name}}
           </v-btn> 
-           <br>
-            {{answer.created_at | newDate}}
-          </p>
+        </div>
         <div v-if="questioner && !question.best_answer_id">
           <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
         </div>
@@ -192,10 +202,10 @@
         <v-expansion-panel
         >
         <v-expansion-panel-header>
-          <template v-if="!answer.replies">返信する</template>
+          <template v-if="answer.replies.length === 0">返信する</template>
           <template v-else>{{answer.replies.length}}件の返信</template>
         </v-expansion-panel-header>
-        <v-expansion-panel-content class="pl-10">
+        <v-expansion-panel-content class="pl-3">
           <v-card
             v-for="reply in answer.replies"
             :key="reply.id"
@@ -203,10 +213,9 @@
             class="my-3"
           >
           <v-card-text>
-              <p class="answer-body">{{reply.body}}</p>
-              <p class="answer-info">
+            <div class="d-flex">
                 <v-btn 
-                  class="question-user" 
+                  class="pa-0"
                   :to="{ name: 'user', params: {id: reply.user.id } }" 
                   text
                   link
@@ -219,23 +228,26 @@
                 </template>
                 <template v-else>
                 <v-avatar color="grey" size="35" class="mr-2">
-                  <v-icon dark>
+                  <v-icon dark color="white">
                     mdi-account-circle
                   </v-icon>
                 </v-avatar>
                 </template>
-                 {{reply.user.name}}
-                 <span v-if="questioner">質問者</span>
                 </v-btn> 
-                <br>
-                {{reply.created_at | newDate}}
-              </p>
-            <div v-if="currentUserId === reply.user_id">
-              <v-btn color="red lighten-1" dark @click="deleteReply(reply.id)">削除</v-btn>
+                <div>
+                  <div style="line-height: 36px; line-height: 36px">
+                    <span class="subtitle-1">{{reply.user.name}}</span>
+                    <span class="caption"> {{reply.created_at | newDate}}</span>
+                  </div>
+                  <p>{{reply.body}}</p>
+                  <div v-if="currentUserId === reply.user_id">
+                    <v-btn color="red lighten-1" dark @click="deleteReply(reply.id)">削除</v-btn>
+                  </div>
+                </div>
             </div>
           </v-card-text>
           </v-card>
-          <v-card>
+          <v-card outlined>
             <v-form>
             <v-card-text>
               <v-textarea
@@ -312,7 +324,7 @@ export default {
   },
   filters: {
     newDate: function(val){
-      return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})([\w|:|.|+]*)/, "$1年$2月$3日")
+      return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})([\w|:|.|+]*)/, "$1/$2/$3 $3:$4")
     }
   },
   methods: {

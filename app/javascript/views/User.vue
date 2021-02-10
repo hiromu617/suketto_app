@@ -39,7 +39,7 @@
       </template>
       <template v-else>
           <v-avatar color="grey" size="120" class="my-5">
-          <v-icon dark>
+          <v-icon dark color="white">
             mdi-account-circle
           </v-icon>
         </v-avatar>
@@ -49,8 +49,8 @@
       class="profile-wrap"
       v-if="!editFlg"
     >
-      <div class="d-flex">
-        <v-card-title class="text-h4 font-weight-bold">{{user.name}}</v-card-title>
+      <div class="d-flex profile-header">
+        <v-card-title class="user-name text-h4 font-weight-bold">{{user.name}}</v-card-title>
         <v-spacer></v-spacer>
         <v-card-actions >
           <v-btn v-if="isCurrentUser" color="black" outlined small class="" @click="(editFlg = true)">
@@ -173,6 +173,12 @@ export default{
   }
   .profile-wrap{
     width: 100%;
+  }
+  .user-name{
+    width: 100%;
+  }
+  .profile-header{
+    flex-wrap: wrap;
   }
 }
 </style>
