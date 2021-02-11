@@ -350,6 +350,9 @@ export default {
       this.replyBody = ''
     },
     deleteReply: async function(reply_id){
+      if(!window.confirm('この操作は取り消すことができません。本当に削除しても良いですか？')){
+        return
+      }
       axios.delete('/api/replies/' + reply_id)
       .then(res => {
         this.$store.dispatch('showFlashMessage', {text: '返信を削除しました'});
@@ -378,8 +381,12 @@ export default {
       if(!this.questioner){
         return
       }
+      if(!window.confirm('この操作は取り消すことができません。本当に削除しても良いですか？')){
+        return
+      }
       await axios.delete('/api/questions/' + this.$route.params.id)
       .then( res => {
+        
         this.$store.dispatch('showFlashMessage', {text: '質問を削除しました'});
         router.push('/')
       })
@@ -428,6 +435,9 @@ export default {
       this.answerBody = ''
     },
     deleteAnswer: function(answer_id) {
+      if(!window.confirm('この操作は取り消すことができません。本当に削除しても良いですか？')){
+        return
+      }
       axios.delete('/api/answers/' + answer_id)
       .then(res => {
         this.$store.dispatch('showFlashMessage', {text: '回答を削除しました'});
@@ -438,6 +448,9 @@ export default {
       this.getData()
     },
     createBA: function(answer_id){
+      if(!window.confirm('この操作は取り消すことができません。ベストアンサーを決定しても良いですか？')){
+        return
+      }
       axios.put('/api/questions/' + this.$route.params.id,{
         best_answer_id: answer_id
       })

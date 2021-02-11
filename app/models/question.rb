@@ -1,9 +1,9 @@
 class Question < ApplicationRecord
   mount_uploader :video, VideoUploader
   belongs_to :user
-  has_many :answers
+  has_many :answers, dependent: :destroy
   has_many :question_tags, dependent: :destroy
-  has_many :tags, through: :question_tags
+  has_many :tags, through: :question_tags,dependent: :destroy
   validates :title, presence: true, length: { maximum: 20 } 
   validates :body, presence: true, length: { maximum: 200 } 
   scope :from_tag, -> (tag_id)  { where(id: tag_ids = QuestionTag.where(tag_id: tag_id).select(:question_id))}
