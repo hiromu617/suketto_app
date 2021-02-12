@@ -103,8 +103,8 @@
       </v-card-text>
     </v-card>
     
-    <div class="py-3">
-      <div class="text-h6"><span class="text-h5 red--text">{{answers.length}}</span>件の回答</div>
+    <div class="pt-10">
+      <div class="text-h6 pl-5"><span class="text-h5 red--text">{{answers.length}}</span>件の回答</div>
       <v-divider v-if="answers.length !== 0"></v-divider>
     </div>
 
