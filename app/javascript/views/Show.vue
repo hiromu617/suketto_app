@@ -104,7 +104,7 @@
     </v-card>
     
     <div class="pt-10">
-      <div class="text-h6 pl-5"><span class="text-h5 red--text">{{answers.length}}</span>件の回答</div>
+      <div class="text-h6 pl-5　font-weight-bold pl-5"><span class="text-h5 red--text">{{answers.length}}</span>件の回答</div>
       <v-divider v-if="answers.length !== 0"></v-divider>
     </div>
 
@@ -201,7 +201,7 @@
       <v-expansion-panels flat>
         <v-expansion-panel
         >
-        <v-expansion-panel-header>
+        <v-expansion-panel-header hide-actions>
           <template v-if="answer.replies.length === 0">返信する</template>
           <template v-else>{{answer.replies.length}}件の返信</template>
         </v-expansion-panel-header>

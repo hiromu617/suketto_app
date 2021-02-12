@@ -12,6 +12,15 @@
         <v-tab class=""  @click="sortQuestions('solved')">解決済み</v-tab>
         <!-- <v-tab @click="sortQuestions('unanswered')">未回答</v-tab> -->
       </v-tabs>
+      <div
+        v-if="loading"
+        style="text-align: center;"
+        class="my-3"
+      >
+        <v-progress-circular
+        indeterminate
+        ></v-progress-circular>
+      </div>
       <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
@@ -87,6 +96,7 @@
       </v-card>
       <v-pagination
         color="grey darken-4"
+        class="my-5"
         v-model="page.currentPage"
         :length="page.totalPages"
         circle
@@ -109,7 +119,8 @@ export default {
       page: {
         currentPage: 1,
         totalPages: 5,
-      }
+      },
+      loading: false
     }
   },
   components:{
@@ -136,6 +147,7 @@ export default {
       })
     },
     fetchQuestions: async function(sortName){
+      this.loading = true
       this.questions = []
       await axios.get('/api/questions', {
         params: {
@@ -147,6 +159,7 @@ export default {
         this.page.totalPages = Number(res.headers["total-pages"])
         this.page.currentPage = 1
         this.questions = res.data
+        this.loading = false
       })
       .catch(e => console.log(e));
     },

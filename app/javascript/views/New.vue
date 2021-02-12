@@ -1,5 +1,14 @@
 <template>
   <v-card>
+    <div
+        v-if="loading"
+        style="text-align: center;"
+        class="my-3"
+      >
+        <v-progress-linear
+        indeterminate
+        ></v-progress-linear>
+    </div>
     <v-card-title class="text-h3">新規質問</v-card-title>
     <v-card-text>
       <v-form
@@ -79,6 +88,7 @@ export default {
       videoRules: [
         v => videoValid == false || '50文字以内で入力してください',
       ],
+      loading: false
     }
   },
   methods: {
@@ -123,7 +133,8 @@ export default {
       formData.append('video', this.video)
       // console.log(this.video)
       console.log(formData)
-      axios.post("/api/questions", formData, config)
+      this.loading = true
+      await axios.post("/api/questions", formData, config)
       // axios.post('/api/questions', { 
       //   question: {
       //      title: this.title, 
@@ -133,6 +144,7 @@ export default {
       //   }
       // })
       .then( res => {
+        this.loading = false
         // alert("question posted")
         // this.title = ''
         // this.body = ''
@@ -143,7 +155,7 @@ export default {
         alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
       })
-      router.push('/') 
+      // router.push('/') 
     }
   }
 }
