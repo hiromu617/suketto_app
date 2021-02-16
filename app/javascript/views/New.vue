@@ -112,7 +112,7 @@ export default {
         URL.revokeObjectURL(this.src);
       };
     },
-    createQuestion: async function(){
+    createQuestion: function(){
       // console.log(this.tag)
       // console.log(this.tags)
       if (this.$refs.form.validate() === false){
@@ -134,7 +134,7 @@ export default {
       // console.log(this.video)
       console.log(formData)
       this.loading = true
-      await axios.post("/api/questions", formData, config)
+      axios.post("/api/questions", formData, config)
       // axios.post('/api/questions', { 
       //   question: {
       //      title: this.title, 
@@ -143,19 +143,19 @@ export default {
       //      tag_list: this.tags
       //   }
       // })
-      .then( res => {
+      .then( () => {
+        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
         this.loading = false
         // alert("question posted")
         // this.title = ''
         // this.body = ''
         // this.tags = []
-        this.$store.dispatch('showFlashMessage', {text: '質問を投稿しました'})
       })
       .catch( e => {
-        alert(e.message)
+        // alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
       })
-      // router.push('/') 
+      router.push({name: "index"}) 
     }
   }
 }
