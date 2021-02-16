@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
   <v-expand-transition v-if="editFlg">
       <v-card  width="100%" class="pa-10" elevation="25">
          <v-form>
@@ -69,30 +69,24 @@
       
     </v-card-text> 
     </div>
-  </v-card> 
-  <h2 class="my-5">Questions</h2>
-  <question-card :questions="questions"></question-card>
+  </v-card>  
 </div>
+  
 </template>
 
 <script>
 import axios from '../plugins/axios';
 import router from '../router/router';
-import QuestionCard from '../components/organisms/questionCard.vue';
-import imageCompression from "browser-image-compression"
+import imageCompression from "browser-image-compression";
 
-export default {
-    data: function() {
+export default{
+  data: function() {
     return {
       user: {},
       editFlg: false,
       isCurrentUser: false,
       avatar: "",
-      questions: []
     }
-  },
-  components:{
-    QuestionCard,
   },
   created: function () {
     this.getData();
@@ -102,8 +96,7 @@ export default {
       await axios.get('/api/users/'+ this.$route.params.id)
       .then( res => {
         this.user = res.data
-        this.questions = res.data.questions
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch(e => console.log(e));
       if(this.$store.state.currentUser.id === this.user.id){
@@ -158,6 +151,8 @@ export default {
   }
 }
 </script>
+
+
 <style scoped>
 .user-card{
   margin: 0 auto;

@@ -13,7 +13,7 @@ class Api::UsersController < ApplicationController
 
   def showById
     @user = User.find_by(id: params[:id])
-    render json: @user
+    render json: @user, include: ['questions', 'answers', 'questions.answers', 'questions.user',]
   end
 
   def create

@@ -13,7 +13,7 @@
       </template>
     </v-column>
     <v-column class="boy-image">
-        <img src="../assets/boy.jpg" alt="" class="image">
+        <img src="../../assets/boy.jpg" alt="" class="image">
     </v-column>
   </v-row>
 </template>
