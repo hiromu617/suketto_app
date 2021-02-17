@@ -166,5 +166,7 @@ export default {
 
 
 <style scoped>
-
+.video{
+  max-width: 100%;
+}
 </style>
