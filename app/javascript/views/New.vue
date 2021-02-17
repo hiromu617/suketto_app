@@ -155,7 +155,7 @@ export default {
         // alert(e.message)
         this.$store.dispatch('showFlashMessage', {text: e});
       })
-      router.push({name: "index"}) 
+      router.push({name: "index", force: true}) 
     }
   }
 }

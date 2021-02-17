@@ -14,6 +14,9 @@ Vue.use(Router);
 export default new Router({
   mode: 'history',
   routes: [
+    { path: 'https://still-crag-34956.herokuapp.com/',
+      redirect: 'https://www.suketto.me' 
+    },
     {
       path: '/',
       component: Index,
