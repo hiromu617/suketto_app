@@ -42,6 +42,18 @@
           :rules="passwordRules"
           required
         />
+        <v-checkbox
+          v-model="agreeStatement"
+          dense
+          color="info"
+          class="mt-0 pt-0"
+          :rules="agreeStatementRules"
+        >
+          <template v-slot:label>
+            <TermsOfService></TermsOfService>と
+            <PrivacyPolicy></PrivacyPolicy>に同意する
+          </template>
+        </v-checkbox>
         <v-btn 
           class="grey darken-4" 
           large dark 
@@ -57,6 +69,9 @@
 <script>
 import axios from '../plugins/axios';
 import imageCompression from "browser-image-compression";
+import TermsOfService from '../components/molecules/termsOfService';
+import PrivacyPolicy from '../components/molecules/privacyPolicy';
+
 
 export default {
   data() {
@@ -78,8 +93,16 @@ export default {
         v => /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{6,20}$/.test(v) || '半角6~20文字英大文字・小文字・数字それぞれ１文字以上含む必要があります',
       ],
       showPassword: false,
-      avatar: ""
+      avatar: "",
+      agreeStatement: false,
+      agreeStatementRules: [
+        v => !!v || '利用規約とプライバシーポリシーに同意してください',
+      ],
     };
+  },
+  components: {
+    TermsOfService,
+    PrivacyPolicy
   },
   methods: {
     async getCompressImageFileAsync(file) {
