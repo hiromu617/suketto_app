@@ -8,6 +8,8 @@
           v-bind="attrs"
           v-on="on"
           text
+          small
+          class="px-0"
         >
           プライバシーポリシー
         </v-btn>

@@ -7,7 +7,7 @@
       >
       <v-row justify="center" no-gutters>
         <v-col
-          class=" py-2 text-center white--text"
+          class=" py-2 text-center white--text caption"
           cols="12"
           dark
         >

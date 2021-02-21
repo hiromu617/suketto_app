@@ -46,12 +46,15 @@
           v-model="agreeStatement"
           dense
           color="info"
-          class="mt-0 pt-0"
+          class="mt-0 pt-0 caption"
           :rules="agreeStatementRules"
         >
-          <template v-slot:label>
-            <TermsOfService></TermsOfService>と
-            <PrivacyPolicy></PrivacyPolicy>に同意する
+          <template v-slot:label class="caption">
+            <span style="font-size: 0.7rem;">
+              <TermsOfService></TermsOfService>と
+              <PrivacyPolicy></PrivacyPolicy>
+              に同意する
+            </span>
           </template>
         </v-checkbox>
         <v-btn 
@@ -166,3 +169,6 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+</style>
