@@ -13,11 +13,6 @@
             counter
             auto-grow
           />
-          <vue-tags-input
-            v-model="tag"
-            :tags="tags"
-            @tags-changed="newTags => tags = newTags"
-          />
         </v-form>
         <v-btn  color="indigo lighten-4" class="mr-3" @click="(editFlg = false)">戻る</v-btn>
         <v-btn  color="blue lighten-1" dark @click="updateQuestion">更新</v-btn>
@@ -42,16 +37,16 @@
           <span style="float: right" class="text-h6 mr-5 black--text">{{question.answers.length}}件の回答</span>
         </div>
       <v-card-title class="text-h4 black--text">{{question.title}}</v-card-title>
-        <div v-for="tag in question.tags" :key="tag.id">
+        <div>
           <v-chip
+            v-for="tag in question.tags" :key="tag.id"
             link
             label
-            color="indigo"
-            class="question-tag"
+            class="question-tag mr-2"
             outlined
+            small
             :to="{ name: 'tag',params: {id: tag.id} }"
           >
-          <v-icon left>mdi-label</v-icon>
             {{tag.name}}
           </v-chip>
         </div>

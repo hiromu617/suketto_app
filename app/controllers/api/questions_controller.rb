@@ -27,12 +27,14 @@ class Api::QuestionsController < ApplicationController
 
 
   def create
-    @question = Question.new(question_params)
-    # if params[:tag_list]
-    #   tag_list = params[:tag_list].map { |i| i[:text]}
-    # end
+    @question = Question.new(title: params[:title], body: params[:body], user_id: params[:user_id], video: params[:video])
+    if params[:tag_list] != ""
+      tag_list = params[:tag_list].split(",")
+    end
     if @question.save
-      # @question.save_tags(tag_list)
+      if tag_list 
+        @question.save_tags(tag_list)
+      end
       render json: @question
     else
       render json: @question.errors, status: :unprocessable_entity
@@ -79,7 +81,7 @@ class Api::QuestionsController < ApplicationController
 
   def question_params
     params.permit(
-      :user_id,:title,:body, :video
+      :user_id,:title,:body, :video, :tag_list
     )
   end
 

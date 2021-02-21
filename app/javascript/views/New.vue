@@ -34,11 +34,13 @@
           :counter="200"
           required
         ></v-textarea>
-        <!-- <vue-tags-input
-          v-model="tag"
-          :tags="tags"
-          @tags-changed="newTags => tags = newTags"
-        /> -->
+        <v-combobox
+          multiple
+          chips
+          label="タグ"
+          v-model="tags"
+          :rules="tagsRules"
+        ></v-combobox>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-file-input   
@@ -63,11 +65,9 @@
 <script>
 import axios from '../plugins/axios';
 import router from '../router/router';
-import VueTagsInput from '@johmun/vue-tags-input';
 
 export default {
   components: {
-    VueTagsInput,
   },
   data: function() {
     return {
@@ -82,8 +82,10 @@ export default {
         v => !!v || 'この項目は必須です',
         v => v.length <= 200 || '200文字以内で入力してください',
       ],
-      tag: '',
       tags: [],
+      tagsRules: [
+        v => v.length <= 5 || "1つの投稿に付けられるタグは５個までです",
+      ],
       video: '',
       videoRules: [
         v => videoValid == false || '50文字以内で入力してください',
@@ -129,7 +131,7 @@ export default {
       formData.append('title', this.title)
       formData.append('body', this.body)
       formData.append('user_id', this.$store.state.currentUser.id)
-      // formData.append('tag_list', this.tags)
+      formData.append('tag_list', this.tags)
       formData.append('video', this.video)
       // console.log(this.video)
       console.log(formData)

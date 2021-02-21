@@ -36,9 +36,9 @@
               <v-chip
                 link
                 label
-                color="grey darken-4"
                 class="question-tag mr-2"
                 outlined
+                small
                 :to="{ name: 'tag',params: {id: tag.id} }"
               >
               {{tag.name}}

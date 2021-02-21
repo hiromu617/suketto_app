@@ -1,7 +1,8 @@
 <template>
   <div>
     <h3 class="text-h4">🏷{{tag.name}}のついた質問</h3>
-        <v-card 
+    <question-card :questions="questions"></question-card>
+        <!-- <v-card 
         v-for="question in questions" 
         v-bind:key="question.id"
         outlined
@@ -73,7 +74,7 @@
           </v-card-text>
         </div>
         
-      </v-card>
+      </v-card> -->
       <v-pagination
         color="grey darken-4"
         v-model="page.currentPage"
@@ -87,6 +88,7 @@
 
 <script>
 import axios from '../plugins/axios';
+import QuestionCard from '../components/organisms/questionCard.vue';
 
 export default {
   data: function() {
@@ -98,6 +100,9 @@ export default {
         totalPages: 5,
       }
     }
+  },
+  components: {
+    QuestionCard,
   },
   mounted: function () {
     this.fetchTagQuestions();
