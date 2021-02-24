@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :questions
     resources :answers
     resources :replies, only: [:index, :create, :destroy]
+    resources :likes, only: [:create, :destroy]
     resources :tags, only: [:show]
   end
   

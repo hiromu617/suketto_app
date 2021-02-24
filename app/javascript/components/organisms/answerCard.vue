@@ -6,6 +6,7 @@
         <v-card-text>
           <p class="answer-body subtitle-1 black--text">{{answer.body}}</p>
           <div class="answer-info d-flex">
+            <LikeButton :answer="answer"></LikeButton>
             <v-spacer></v-spacer>
             <div style="margin: auto 0;" class="caption">{{answer.created_at | detailedDate}}</div>
             <v-btn 
@@ -43,6 +44,7 @@
 
 <script>
 import axios from '../../plugins/axios';
+import LikeButton from '../molecules/likeButton'
 
 export default {
   props: ['answer'],
@@ -54,6 +56,9 @@ export default {
   data: function() {
     return {
     }
+  },
+  components: {
+    LikeButton
   },
   computed: {
     currentUserId(){

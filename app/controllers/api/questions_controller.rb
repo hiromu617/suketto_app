@@ -22,7 +22,7 @@ class Api::QuestionsController < ApplicationController
 
   def show
     @question = Question.find_by(id: params[:id])
-    render json: @question, include: ['user','answers', 'answers.replies.user' , 'answers.user', 'tags']
+    render json: @question, include: ['user','answers', 'answers.replies.user' , 'answers.user', 'tags', 'answers.likes']
   end
 
 

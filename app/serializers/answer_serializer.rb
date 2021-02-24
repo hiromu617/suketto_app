@@ -3,4 +3,5 @@ class AnswerSerializer < ActiveModel::Serializer
   belongs_to :question
   belongs_to :user
   has_many :replies
+  has_many :likes
 end
