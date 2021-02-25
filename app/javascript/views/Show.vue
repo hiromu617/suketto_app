@@ -20,12 +20,38 @@
           <h3 class="answer-head">その他の回答</h3>
         </div>
       <AnswerCard :answer="answer">
-        <div v-if="questioner && !question.best_answer_id">
+        <v-menu 
+              offset-y
+              transition="slide-y-transition"
+              bottom
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  v-bind="attrs"
+                  v-on="on"
+                >mdi-dots-horizontal</v-icon>
+              </template>
+              <v-list>
+                <v-list-item 
+                  v-if="questioner && !question.best_answer_id" 
+                  @click="createBA(answer.id)"
+                >
+                ベストアンサーにする
+                </v-list-item>
+                <v-list-item
+                  v-if="currentUserId === answer.user_id"
+                  @click="deleteAnswer(answer.id)"
+                >
+                  回答を削除する
+                </v-list-item>
+              </v-list>
+            </v-menu>
+        <!-- <div v-if="questioner && !question.best_answer_id">
           <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
         </div>
         <div v-if="currentUserId === answer.user_id">
           <v-btn color="red lighten-1" dark @click="deleteAnswer(answer.id)">削除</v-btn>
-        </div>
+        </div> -->
       </AnswerCard>
       <ReplyWrap :answer="answer"></ReplyWrap>
       </div>

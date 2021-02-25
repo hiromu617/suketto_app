@@ -35,15 +35,36 @@
                 </v-avatar>
                 </template>
                 </v-btn> 
-                <div>
-                  <div style="line-height: 36px; line-height: 36px">
-                    <span class="subtitle-1">{{reply.user.name}}</span>
-                    <span class="caption"> {{reply.created_at | detailedDate}}</span>
+                <div style="width: 100%;">
+                  <div class="d-flex" style="line-height: 36px; line-height: 36px">
+                    <div class="subtitle-1">{{reply.user.name}}</div>
+                    <div class="caption ml-5" style="line-height: 30px;"> {{reply.created_at | detailedDate}}</div>
+                    <v-spacer></v-spacer>
+                    <v-menu 
+                      offset-y
+                      transition="slide-y-transition"
+                      bottom
+                    >
+                    <template v-slot:activator="{ on, attrs }">
+                      <div>
+                        <v-icon
+                          v-if="currentUserId === reply.user_id"
+                          v-bind="attrs"
+                          v-on="on"
+                        >mdi-dots-horizontal</v-icon>
+                      </div>
+                      
+                    </template>
+                      <v-list>
+                        <v-list-item 
+                          @click="deleteReply(reply.id)"
+                        >
+                        返信を削除する
+                        </v-list-item>
+                      </v-list>
+                    </v-menu>
                   </div>
                   <p>{{reply.body}}</p>
-                  <div v-if="currentUserId === reply.user_id">
-                    <v-btn color="red lighten-1" dark @click="deleteReply(reply.id)">削除</v-btn>
-                  </div>
                 </div>
             </div>
           </v-card-text>

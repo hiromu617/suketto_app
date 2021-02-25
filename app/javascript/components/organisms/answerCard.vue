@@ -4,7 +4,12 @@
         outlined
         >
         <v-card-text>
-          <p class="answer-body subtitle-1 black--text">{{answer.body}}</p>
+          <div class="d-flex">
+            <p class="answer-body subtitle-1 black--text">{{answer.body}}</p>
+            <v-spacer></v-spacer>
+
+            <slot></slot>
+          </div>
           <div class="answer-info d-flex">
             <LikeButton :answer="answer"></LikeButton>
             <v-spacer></v-spacer>
@@ -14,7 +19,7 @@
               :to="{ name: 'user', params: {id: answer.user.id } }" 
               text
               link
-              style="text-transform: none"
+              style="text-transform: none; padding-right: 0;"
             >
             <template v-if="answer.user.avatar.url">
               <v-avatar size="35" class="mr-2">
@@ -31,7 +36,6 @@
             {{answer.user.name}}
           </v-btn> 
         </div>
-        <slot></slot>
         <!-- <div v-if="questioner && !question.best_answer_id">
           <v-btn color="blue lighten-1" dark @click="createBA(answer.id)">ベストアンサーにする</v-btn>
         </div>
