@@ -5,7 +5,7 @@
         class="ma-2"
         text
         icon
-        color="blue lighten-2"
+        color="blue darken-1"
       >
         <v-icon class="mr-1">mdi-thumb-up</v-icon>
         {{answer.likes.length}}
@@ -67,10 +67,12 @@ export default {
         }
       })
       .catch(e => alert(e))
+      this.$router.go({path: this.$router.currentRoute.path, force: true});
     },
     deleteLike: async function(){
       await axios.delete('/api/likes/' + this.like_id)
       .catch(e => console.log(e.message))
+      this.$router.go({path: this.$router.currentRoute.path, force: true});
     }
   }
 }
