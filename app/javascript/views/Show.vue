@@ -58,7 +58,7 @@
     </div>
     <template v-if="!questioner && !question.best_answer_id" >
       <v-divider class="mb-3"></v-divider>
-      <v-card outlined>
+      <v-card outlined class="mb-10">
         <v-form>
           <v-card-text>
             <v-textarea

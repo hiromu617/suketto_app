@@ -8,15 +8,16 @@ import Show from "../views/Show";
 import New from "../views/New";
 import Tag from "../views/Tag";
 import User from "../views/User";
+import About from "../views/About";
 
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
   routes: [
-    { path: 'https://still-crag-34956.herokuapp.com/',
-      redirect: 'https://www.suketto.me' 
-    },
+    // { path: 'https://still-crag-34956.herokuapp.com/',
+    //   redirect: 'https://www.suketto.me' 
+    // },
     {
       path: '/',
       component: Index,
@@ -52,11 +53,6 @@ export default new Router({
       name: 'new'
     },
     {
-      path: '/:id',
-      component: Show,
-      name: 'show'
-    },
-    {
       path: '/tag/:id/',
       component: Tag,
       name: 'tag'
@@ -65,6 +61,16 @@ export default new Router({
       path: '/user/:id/',
       component: User,
       name: 'user'
+    },
+    {
+      path: '/about/',
+      component: About,
+      name: 'about'
+    },
+    {
+      path: '/question/:id',
+      component: Show,
+      name: 'show'
     },
   ]
 });

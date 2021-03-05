@@ -7,10 +7,11 @@
       >
       <v-row justify="center" no-gutters>
         <v-col
-          class=" py-2 text-center white--text caption"
+          class=" pb-2 text-center white--text caption"
           cols="12"
           dark
         >
+        <v-btn :to="{ name: 'about' }" >SUKETTOについて</v-btn>
         <TermsOfService></TermsOfService>
         <PrivacyPolicy></PrivacyPolicy>
         <a target="_blank" rel="noopener noreferrer"
@@ -41,6 +42,6 @@ export default {
 </script>
 <style scoped>
 .v-footer{
-  margin-top: 100px;
+  margin-top: 200px!important;
 }
 </style>

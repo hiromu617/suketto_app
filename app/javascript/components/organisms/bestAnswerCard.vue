@@ -7,6 +7,7 @@
         <v-card-text>
           <p class="answer-body subtitle-1">{{answer.body}}</p>
           <div class="answer-info d-flex">
+            <LikeButton :answer="answer"></LikeButton>
             <v-spacer></v-spacer>
             <div style="margin: auto 0;" class="caption">{{answer.created_at | detailedDate}}</div>
             <v-btn 
@@ -35,12 +36,16 @@
       </v-card>
 </template>
 <script>
+import LikeButton from '../molecules/likeButton'
 export default {
   props: ['answer'],
   filters: {
     detailedDate: function(val){
       return val.toString().replace(/([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})([\w|:|.|+]*)/, "$1/$2/$3 $4:$5")
     }
+  },
+  components: {
+    LikeButton
   },
 }
 </script>

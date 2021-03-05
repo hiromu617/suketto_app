@@ -8,7 +8,7 @@
           v-bind="attrs"
           v-on="on"
           text
-          class="px-0"
+          class="px-0 mx-3"
         >
           利用規約
         </v-btn>
