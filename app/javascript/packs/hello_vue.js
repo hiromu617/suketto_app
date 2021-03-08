@@ -11,8 +11,20 @@ import App from '../app.vue'
 import router from '../router/router'
 import store from '../store'
 import Vuetify from "vuetify"; 
+import firebase from "firebase";
 // import "vuetify/dist/vuetify.min.css"; 
 // import twemoji from 'twemoji'
+
+const config = {
+  apiKey: "AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc",
+  authDomain: "suketto-app.firebaseapp.com",
+  projectId: "suketto-app",
+  storageBucket: "suketto-app.appspot.com",
+  messagingSenderId: "1055750055329",
+  appId: "1:1055750055329:web:c7585d2981dfe04faf17e0",
+  measurementId: "G-5N1LJRDRK4"
+};
+firebase.initializeApp(config);
 
 Vue.use(Vuetify); 
 const vuetify = new Vuetify(); 

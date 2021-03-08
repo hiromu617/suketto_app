@@ -1,3 +1,4 @@
+// もう使わない
 <template>
   <v-card width="600px" class="mx-auto mt-10 card">
     <v-card-title>

@@ -28,7 +28,25 @@
         JOIN SUKETTO
       </h1>
       <template v-if="!isAuthenticated">
-        <v-btn to="/register" class="botton" color="grey darken-4" dark x-large>今すぐはじめる</v-btn>
+        <v-dialog
+              v-model="loginDialogFlug"
+              width="500"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn 
+                  v-bind="attrs"
+                  v-on="on"
+                  class="botton mr-5" 
+                  color="grey darken-4" 
+                  dark 
+                  x-large
+                >Login</v-btn>
+              </template>
+
+                <v-card>
+                  <LoginDialog></LoginDialog>
+                </v-card>
+          </v-dialog>
       </template>
       <template v-else>
         <v-btn to="/new" class="botton mr-5" color="grey darken-4" dark x-large>Post a question</v-btn>
@@ -37,11 +55,15 @@
   </div>
 </template>
 <script>
+import LoginDialog from '../components/organisms/googleLogin'
 export default {
   computed: {
     isAuthenticated(){
       return this.$store.getters.idToken !== null;
     },
+  },
+  components: {
+    LoginDialog
   },
 }
 </script>

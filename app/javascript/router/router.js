@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "../store";
-import Login from "../views/Login";
+// import Login from "../views/Login";
+// import Login from "../components/organisms/googleLogin";
 import Register from "../views/Register";
 import Index from "../views/Index";
 import Show from "../views/Show";
@@ -23,30 +24,30 @@ export default new Router({
       component: Index,
       name: 'index'
     },
-    {
-      path: '/login',
-      component: Login,
-      name: 'login',
-      beforeEnter(to, from, next) {
-        if (store.getters.idToken) {
-          next('/');
-        } else{
-          next()
-        }
-      }
-    },
-    {
-      path: '/register',
-      component: Register,
-      name: 'register',
-      beforeEnter(to, from, next) {
-        if (store.getters.idToken) {
-          next('/');
-        } else{
-          next()
-        }
-      }
-    },
+    // {
+    //   path: '/login',
+    //   component: Login,
+    //   name: 'login',
+    //   beforeEnter(to, from, next) {
+    //     if (store.getters.idToken) {
+    //       next('/');
+    //     } else{
+    //       next()
+    //     }
+    //   }
+    // },
+    // {
+    //   path: '/register',
+    //   component: Register,
+    //   name: 'register',
+    //   beforeEnter(to, from, next) {
+    //     if (store.getters.idToken) {
+    //       next('/');
+    //     } else{
+    //       next()
+    //     }
+    //   }
+    // },
     {
       path: '/new',
       component: New,

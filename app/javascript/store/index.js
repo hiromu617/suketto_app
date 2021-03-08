@@ -25,7 +25,7 @@ export default new Vuex.Store({
       state.idToken = idToken;
     },
     setCurrentUser(state, user){
-      state.user = user;
+      state.currentUser = user;
     },
     setMessage: (state, payload) => {
       state.text = payload.text;
@@ -54,87 +54,90 @@ export default new Vuex.Store({
     //     commit('updateIdToken', idToken);
     //   }
     // },
-    login({ dispatch, state }, authData) {
-      axios
-        .post(
-          '/accounts:signInWithPassword?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
-          {
-            email: authData.email,
-            password: authData.password,
-            returnSecureToken: true
-          }
-        )
-        .then(response => {
-          dispatch('setAuthData', {
-            idToken: response.data.idToken,
-            expiresIn: response.data.expiresIn,
-            refreshIdToken: response.data.refreshIdToken,
-          })
-          router.go("/");
-          dispatch('showFlashMessage', {text: 'ログインしました'});
-        })
-        .catch(e => {
-          state.currentUser = {}
-          dispatch('showFlashMessage', {text: e});
-        })
-    },
-    logout({ commit, dispatch }) {
-      commit('updateIdToken', null);
-      localStorage.removeItem('idToken');
-      localStorage.removeItem('expiryTimeMs');
-      localStorage.removeItem('refreshToken');
-      router.replace('/');
-    },
-    async refreshIdToken({ dispatch }, refreshToken){
-      await axiosRefresh.post(
-        '/token?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
-        {
-          grant_type: 'refresh_token',
-          refresh_token: refreshToken
-        }
-      ).then(response => {
-        dispatch('setAuthData',{
-          idToken: response.data.id_token,
-          expiresIn: response.data.expires_in,
-          refreshToken: response.data.refresh_id_token,
-        });
-      });
-    },
-    register({ dispatch }, authData) {
-      axios.post(
-        '/accounts:signUp?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
-        {
-          email: authData.email,
-          password: authData.password,
-          returnSecureToken: true
-        }
-      ).then(response => {
-        // console.log(response);
-        dispatch('setAuthData',{
-          idToken: response.data.idToken,
-          expiresIn: response.data.expiresIn,
-          refreshIdToken: response.data.refreshIdToken,
-        })
-        router.push('/');
-        dispatch('showFlashMessage', {text: '新規登録しました'});
-      })
-      .catch(e => {
-        dispatch('showFlashMessage', {text: e});
-      })
-    },
-    setAuthData({ commit, dispatch }, authData){
-        const now = new Date();
-        const expiryTimeMs = now.getTime() + authData.expiresIn * 1000;
-        commit('updateIdToken', authData.idToken);
-        localStorage.setItem('idToken', authData.idToken);
-        localStorage.setItem('expiryTimeMs', expiryTimeMs);
-        localStorage.setItem('refreshToken', authData.refreshToken);
-        setTimeout(() => {
-          dispatch('refreshIdToken', authData.refreshToken);
-        }, authData.expiresIn * 1000);
-    },
+    // login({ dispatch, state }, authData) {
+    //   axios
+    //     .post(
+    //       '/accounts:signInWithPassword?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
+    //       {
+    //         email: authData.email,
+    //         password: authData.password,
+    //         returnSecureToken: true
+    //       }
+    //     )
+    //     .then(response => {
+    //       dispatch('setAuthData', {
+    //         idToken: response.data.idToken,
+    //         expiresIn: response.data.expiresIn,
+    //         refreshIdToken: response.data.refreshIdToken,
+    //       })
+    //       router.go("/");
+    //       dispatch('showFlashMessage', {text: 'ログインしました'});
+    //     })
+    //     .catch(e => {
+    //       state.currentUser = {}
+    //       dispatch('showFlashMessage', {text: e});
+    //     })
+    // },
+    // logout({ commit, dispatch }) {
+    //   commit('updateIdToken', null);
+    //   localStorage.removeItem('idToken');
+    //   localStorage.removeItem('expiryTimeMs');
+    //   localStorage.removeItem('refreshToken');
+    //   router.replace('/');
+    // },
+    // async refreshIdToken({ dispatch }, refreshToken){
+    //   await axiosRefresh.post(
+    //     '/token?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
+    //     {
+    //       grant_type: 'refresh_token',
+    //       refresh_token: refreshToken
+    //     }
+    //   ).then(response => {
+    //     dispatch('setAuthData',{
+    //       idToken: response.data.id_token,
+    //       expiresIn: response.data.expires_in,
+    //       refreshToken: response.data.refresh_id_token,
+    //     });
+    //   });
+    // },
+    // register({ dispatch }, authData) {
+    //   axios.post(
+    //     '/accounts:signUp?key=AIzaSyBsrOFZVr3xHcTDuCjMdIZBicdClAwI7jc',
+    //     {
+    //       email: authData.email,
+    //       password: authData.password,
+    //       returnSecureToken: true
+    //     }
+    //   ).then(response => {
+    //     // console.log(response);
+    //     dispatch('setAuthData',{
+    //       idToken: response.data.idToken,
+    //       expiresIn: response.data.expiresIn,
+    //       refreshIdToken: response.data.refreshIdToken,
+    //     })
+    //     router.push('/');
+    //     dispatch('showFlashMessage', {text: '新規登録しました'});
+    //   })
+    //   .catch(e => {
+    //     dispatch('showFlashMessage', {text: e});
+    //   })
+    // },
+    // setAuthData({ commit, dispatch }, authData){
+    //     const now = new Date();
+    //     const expiryTimeMs = now.getTime() + authData.expiresIn * 1000;
+    //     commit('updateIdToken', authData.idToken);
+    //     localStorage.setItem('idToken', authData.idToken);
+    //     localStorage.setItem('expiryTimeMs', expiryTimeMs);
+    //     localStorage.setItem('refreshToken', authData.refreshToken);
+    //     setTimeout(() => {
+    //       dispatch('refreshIdToken', authData.refreshToken);
+    //     }, authData.expiresIn * 1000);
+    // },
     showFlashMessage({commit, state}, message){
       commit('setMessage', message);
+    }, 
+    fetchCurrentUser({commit, state}, user){
+      commit('setCurrentUser', user);
     } 
     // showFlashMessage: ({state, commit}, message) => new Promise((resolve,reject)=>{
     //   if(state.timeoutId !== -1) {
@@ -161,7 +164,8 @@ export default new Vuex.Store({
   },
   plugins: [
     createPersistedState({
-      paths: ['idToken', 'currentUser']
+      paths: ['currentUser']
+      // paths: ['idToken', 'currentUser']
     })
   ]
 })

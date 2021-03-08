@@ -7,6 +7,7 @@ class Api::UsersController < ApplicationController
   end
 
   def show
+    # binding.pry
     @user = User.find_by(email: params[:email])
     render json: @user
   end
