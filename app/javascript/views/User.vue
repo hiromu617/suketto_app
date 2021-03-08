@@ -103,7 +103,7 @@ export default {
       .then( res => {
         this.user = res.data
         this.questions = res.data.questions
-        console.log(res.data)
+        // console.log(res.data)
       })
       .catch(e => console.log(e));
       if(this.$store.state.currentUser.id === this.user.id){

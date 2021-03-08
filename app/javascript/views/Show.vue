@@ -118,7 +118,7 @@ export default {
       .then( res => {
         this.question = res.data
         // console.log(this.question)
-        console.log(res.data)
+        // console.log(res.data)
         for(let i = 0; i < res.data.answers.length; i++){
           this.answers.push(res.data.answers[i]);
         }

@@ -41,5 +41,5 @@ yarn-debug.log*
 .yarn-integrity
 
 /app/javascript/plugins/firebase.js
-# /app/javascript/packs/hello_vue.js
+/app/javascript/packs/hello_vue.js
 /.env

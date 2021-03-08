@@ -57,7 +57,7 @@ export default {
       await firebase.auth()
       .signInWithPopup(provider)
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         this.email = result.user.email
         this.name = result.user.displayName
       }).catch((error) => {
@@ -70,7 +70,7 @@ export default {
         }
       })
       .then( res => {
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data == null){
           this.signUp()
         }
