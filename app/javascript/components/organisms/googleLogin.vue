@@ -7,11 +7,10 @@
       @click="LogIn"
       color=""
       text
-      small
-      width="30"
-      class="mb-5"
+      class="mb-5 login-btn"
+      x-large
     >
-    <img src="../../assets/btn_google_signin_light_normal_web.png" alt="">
+    <!-- <img src="../../assets/btn_google_signin_light_normal_web.png" alt=""> -->
     </v-btn>
     <div style="font-size: 0.7rem;">
       <TermsOfService></TermsOfService>と
@@ -109,3 +108,11 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.login-btn{
+  padding: 0 95px!important;
+  height: 44px!important;
+  background-image: url("../../assets/btn_google_signin_light_normal_web.png");
+}
+</style>
