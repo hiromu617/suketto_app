@@ -3,7 +3,7 @@
     <Header></Header>
       <v-main class="pb-10 mb-10">
         <FlashMessage></FlashMessage>
-        <v-container>
+        <v-container class="pb-10">
           <router-view>
           </router-view>
         </v-container>

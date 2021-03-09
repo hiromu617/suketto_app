@@ -75,12 +75,16 @@ export default {
           this.signUp()
         }
         this.$store.dispatch('fetchCurrentUser', res.data);
+        this.$store.dispatch('showFlashMessage', {text: 'ログインしました'});
       })
       .catch( e => {
         console.log(e.message)
         this.$store.dispatch('showFlashMessage', {text: e.message, mode: "error"});
       }) 
-
+        this.redirect()
+    },
+    redirect: function(){
+      this.$router.go({path: this.$router.currentRoute.path, force: true});
     },
     signUp: async function(){
        var formData = new FormData();

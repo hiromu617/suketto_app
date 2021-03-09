@@ -27,7 +27,7 @@
       <h1 class="head text-h4 font-weight-bold pa-10">
         JOIN SUKETTO
       </h1>
-      <template v-if="!isAuthenticated">
+      <template v-if="!isAuth">
         <v-dialog
               v-model="loginDialogFlug"
               width="500"
@@ -56,11 +56,16 @@
 </template>
 <script>
 import LoginDialog from '../components/organisms/googleLogin'
+import firebase from 'firebase'
+
 export default {
-  computed: {
-    isAuthenticated(){
-      return this.$store.getters.idToken !== null;
-    },
+  data () {
+    return {
+      isAuth: false,
+    }
+  },
+   created: function () {
+    firebase.auth().onAuthStateChanged((user) => this.isAuth = !!user)
   },
   components: {
     LoginDialog

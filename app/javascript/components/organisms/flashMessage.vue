@@ -1,7 +1,7 @@
 <template>
   <v-alert 
     type="success"
-    color="blue"
+    color="blue lighten-1"
     v-if="text"
     transition="fade-transition"
     dismissible
@@ -26,8 +26,7 @@ export default {
 .alert{
   position: fixed;
   z-index: 999;
-  top: 56px;
-  width: 100%;
-  margin: 0 auto;
+  bottom: 0px;
+  margin-left: 30px;
 }
 </style>
