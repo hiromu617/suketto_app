@@ -71,16 +71,16 @@ export default {
       .then( res => {
         // console.log(res.data)
         if(res.data == null){
-          this.signUp()
+          return this.signUp()
         }
         this.$store.dispatch('fetchCurrentUser', res.data);
-        this.$store.dispatch('showFlashMessage', {text: 'ログインしました'});
       })
       .catch( e => {
         console.log(e.message)
         this.$store.dispatch('showFlashMessage', {text: e.message, mode: "error"});
       }) 
         this.redirect()
+        this.$store.dispatch('showFlashMessage', {text: 'ログインしました'});
     },
     redirect: function(){
       this.$router.go({path: this.$router.currentRoute.path, force: true});
@@ -91,18 +91,22 @@ export default {
       formData.append('email', this.email)
       await axios.post("/api/users",formData)
       .then( res => {
-        // console.log(res.data)
+        // alert(res.data)
         this.$store.dispatch('fetchCurrentUser', res.data);
-        this.$store.dispatch('showFlashMessage', {text: '新規登録しました'});
       })
       .catch( error =>{
         console.log(error.message);
         this.$store.dispatch('showFlashMessage', {text: '登録に失敗しました'});
       })
+      this.redirect()
+      this.$store.dispatch('showFlashMessage', {text: 'signupしました'});
     },
     signOut: function () {
       firebase.auth().signOut()
       this.$store.state.currentUser = {};
+      signOutMessage();
+    },
+    signOutMessage: function(){
       this.$store.dispatch('showFlashMessage', {text: "ログアウトしました"});
     }
   },

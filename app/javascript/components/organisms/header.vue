@@ -105,6 +105,9 @@ export default {
     },
   },
   created: function () {
+    if(this.$store.state.currentUser.name == null){
+      this.signOutWithoutMessage()
+    }
     firebase.auth().onAuthStateChanged((user) => this.isAuth = !!user)
   },
   methods: {
@@ -117,6 +120,10 @@ export default {
       firebase.auth().signOut()
       this.$store.state.currentUser = {};
       this.$store.dispatch('showFlashMessage', {text: "ログアウトしました"});
+    },
+    signOutWithoutMessage: function(){
+      firebase.auth().signOut()
+      this.$store.state.currentUser = {};
     }
   }
 }
